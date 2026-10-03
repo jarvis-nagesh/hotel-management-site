@@ -506,11 +506,16 @@ function receiptButtons(code) {
     <button class="btn small" data-action="send-receipt" data-id="${code.id}" title="Email the receipt to the owner again">${icon("mail")} Resend</button>`;
 }
 
-/** The hotel a code belongs to: the computer it was issued for, else the one using its licence. */
+/** The hotel a code belongs to: the computer using its licence, else the one it was issued for. */
 function codeDevice(code) {
-  if (code.for_device_hash) return deviceFor(code.for_device_hash);
   const license = code.license_id && state.data.licenses.find((item) => item.id === code.license_id);
-  return license ? deviceFor(license.device_hash) : null;
+  if (license?.device_hash) return deviceFor(license.device_hash);
+  return code.for_device_hash ? deviceFor(code.for_device_hash) : null;
+}
+
+/** Licence moves into or out of a computer, newest first. */
+function transfersFor(hash) {
+  return (state.data.transfers || []).filter((item) => item.from_device_hash === hash || item.to_device_hash === hash);
 }
 
 const HOTEL_FILTERS = [
@@ -755,7 +760,8 @@ function renderTable(rows) {
           <td><span class="pill tone-${status.tone}">${esc(status.label)}</span></td>
           <td class="actions">${license.revoked_at
             ? `<button class="btn small" data-action="restore-license" data-id="${license.id}">Restore</button>`
-            : `<button class="btn small" data-action="extend-license" data-id="${license.id}">Extend</button>`}</td>
+            : `<button class="btn small" data-action="extend-license" data-id="${license.id}">Extend</button>
+               <button class="btn small" data-action="transfer-license" data-id="${license.id}">Move</button>`}</td>
         </tr>`;
       }).join("")}</tbody></table>`;
   }
@@ -811,6 +817,7 @@ function renderDrawer() {
   const trialLeft = daysUntil(device.trial_ends_at);
   const codes = state.data.codes.filter((code) => codeDevice(code)?.device_hash === device.device_hash);
   const pastLicenses = state.data.licenses.filter((item) => item.device_hash === device.device_hash && item.revoked_at);
+  const moves = transfersFor(device.device_hash);
   const greeting = device.owner_name ? `Hello ${device.owner_name},` : "Hello,";
 
   const layer = document.createElement("div");
@@ -858,6 +865,7 @@ function renderDrawer() {
               <button class="btn primary small" data-action="new-code" data-kind="renewal" data-device="${esc(device.device_hash)}">${icon("key")} Renewal code</button>
               <button class="btn small" data-action="extend-license" data-id="${license.id}">Extend</button>
               <button class="btn small" data-action="set-license-end" data-id="${license.id}">Set end date</button>
+              <button class="btn small" data-action="transfer-license" data-id="${license.id}">Move to another computer</button>
               <button class="btn small danger" data-action="revoke-license" data-id="${license.id}">Cancel licence</button>
             </div>` : `
             <p class="muted" style="margin:0">No licence yet${pastLicenses.length ? ` (${plural(pastLicenses.length, "cancelled licence")})` : ""}.</p>
@@ -866,6 +874,18 @@ function renderDrawer() {
               ${pastLicenses.map((item) => `<button class="btn small" data-action="restore-license" data-id="${item.id}">Restore …${esc(item.code.slice(-4))}</button>`).join("")}
             </div>`}
         </div>
+
+        ${moves.length ? `<div class="section">
+          <h3>Licence moves</h3>
+          <div class="code-list">${moves.map((move) => {
+            const incoming = move.to_device_hash === device.device_hash;
+            const other = deviceFor(incoming ? move.from_device_hash : move.to_device_hash);
+            return `<div class="code-item"><div class="grow">
+              <div><b>${incoming ? "Moved here from" : "Moved to"}</b> ${esc(other ? hotelLabel(other) : "another computer")} <span class="muted mono">${shortId(incoming ? move.from_device_hash : move.to_device_hash)}</span></div>
+              <div class="muted" style="font-size:12px">${fmtDateTime(move.transferred_at)}${move.note ? ` · ${esc(move.note)}` : ""}</div>
+            </div></div>`;
+          }).join("")}</div>
+        </div>` : ""}
 
         <div class="section">
           <h3>Free trial</h3>
@@ -1014,6 +1034,34 @@ function setLicenseEnd(id) {
     text: `${hotelLabel(deviceFor(license.device_hash))}. The subscription ends at the end of this day (India time).`,
     fields: dateField("date", "Ends on", todayInput(license.expires_at)),
     submit: (form) => saved(api("set-license-end", { licenseId: license.id, date: form.date.value }), "End date saved"),
+  });
+}
+
+function transferLicense(id) {
+  const license = state.data.licenses.find((item) => item.id === Number(id));
+  const from = deviceFor(license.device_hash);
+  const options = state.data.devices
+    .filter((device) => device.device_hash !== license.device_hash)
+    .sort((a, b) => hotelLabel(a).localeCompare(hotelLabel(b)))
+    .map((device) => {
+      const taken = !!licenseFor(device.device_hash);
+      return `<option value="${esc(device.device_hash)}"${taken ? " disabled" : ""}>${esc(hotelLabel(device))} · ${shortId(device.device_hash)}${device.device_name ? ` · ${esc(device.device_name)}` : ""}${taken ? " (has a licence)" : ""}</option>`;
+    });
+  formModal({
+    title: "Move licence to another computer",
+    text: `${license.code} is on ${hotelLabel(from)} (${shortId(license.device_hash)}). It moves at once: that computer locks at its next check and the new one unlocks at its next check (or when its owner presses Check again). The end date stays the same.`,
+    fields: options.length
+      ? `<div><label class="label" for="target">Move to</label><div class="field"><select id="target" name="target" required>
+          <option value="">Choose the new computer…</option>${options.join("")}
+        </select></div>
+        <p class="muted" style="margin:6px 0 0;font-size:12px">The new computer appears in this list once the app has run on it. Ask the owner for the Computer ID on its lock screen to be sure.</p></div>
+        <div><label class="label" for="move-note">Reason</label><div class="field"><input id="move-note" name="note" maxlength="200" placeholder="e.g. new billing computer"></div></div>`
+      : '<div class="info-note">There is no other computer yet. It appears here once the app has run on it.</div>',
+    submitLabel: "Move licence",
+    submit: async (form) => {
+      if (!form.target?.value) throw new Error("Choose the computer to move the licence to.");
+      await saved(api("transfer-license", { licenseId: license.id, deviceHash: form.target.value, note: form.note.value.trim() }), "Licence moved");
+    },
   });
 }
 
@@ -1209,6 +1257,7 @@ document.addEventListener("click", (event) => {
     case "set-trial-end": return setTrialEnd(device);
     case "extend-license": return extendLicense(id);
     case "set-license-end": return setLicenseEnd(id);
+    case "transfer-license": return transferLicense(id);
     case "revoke-license": return confirmAction({
       title: "Cancel this licence?",
       text: "The computer using it locks at its next check (within a few hours, or when it next goes online). You can restore it later.",
