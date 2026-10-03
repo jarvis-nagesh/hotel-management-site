@@ -173,6 +173,7 @@
   tbody tr.clickable { cursor: pointer; }
   tbody tr:hover { background: var(--fill); }
   td.actions { text-align: right; white-space: nowrap; }
+  td.mono { white-space: nowrap; }
   td .sub { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; }
   .who { display: flex; align-items: center; gap: 11px; min-width: 190px; }
   .avatar { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #fff; flex: none; }
@@ -484,6 +485,27 @@ function codeStatus(code) {
   return { key: "unused", label: "Unused", tone: "info" };
 }
 
+const PAYMENT_METHODS = { upi: "UPI", cash: "Cash", bank: "Bank transfer", cheque: "Cheque", card: "Card", other: "Other" };
+
+function paymentText(code) {
+  if (code.amount === null || code.amount === undefined) return "—";
+  if (Number(code.amount) === 0) return "Complimentary";
+  return rupees(code.amount);
+}
+
+/** Where a used code's receipt stands. */
+function receiptText(code) {
+  if (!code.used_at) return "";
+  if (code.receipt_sent_at && code.receipt_number) return `Receipt ${code.receipt_number} · emailed ${fmtDate(code.receipt_sent_at)}`;
+  return "Receipt waiting for the owner's email";
+}
+
+function receiptButtons(code) {
+  if (!code.used_at) return "";
+  return `<button class="btn small" data-action="receipt-pdf" data-id="${code.id}" title="Download the receipt PDF">${icon("download")} Receipt</button>
+    <button class="btn small" data-action="send-receipt" data-id="${code.id}" title="Email the receipt to the owner again">${icon("mail")} Resend</button>`;
+}
+
 /** The hotel a code belongs to: the computer it was issued for, else the one using its licence. */
 function codeDevice(code) {
   if (code.for_device_hash) return deviceFor(code.for_device_hash);
@@ -746,14 +768,14 @@ function renderTable(rows) {
       return `<tr>
         <td class="mono">${esc(code.code)}</td>
         <td>${code.kind === "purchase" ? "Purchase" : "Renewal"}<span class="sub">${plural(code.years, "year")}</span></td>
-        <td>${code.amount === null || code.amount === undefined ? "—" : rupees(code.amount)}</td>
+        <td>${esc(paymentText(code))}<span class="sub">${esc([PAYMENT_METHODS[code.payment_method], code.payment_reference].filter(Boolean).join(" · "))}</span></td>
         <td>${device ? `<b>${esc(hotelLabel(device))}</b>` : ""}<span class="sub">${esc(code.note || (device ? "" : "—"))}</span></td>
         <td>${fmtDate(code.created_at)}</td>
-        <td><span class="pill tone-${status.tone}">${esc(status.label)}</span></td>
+        <td><span class="pill tone-${status.tone}">${esc(status.label)}</span>${code.used_at ? `<span class="sub">${esc(receiptText(code))}</span>` : ""}</td>
         <td class="actions">
           <button class="btn small icon-only" data-action="copy" data-text="${esc(code.code)}" title="Copy code" aria-label="Copy code">${icon("copy")}</button>
           ${status.key === "unused" ? `<button class="btn small" data-action="share-code" data-id="${code.id}">${icon("share")} Send</button>
-          <button class="btn small danger" data-action="revoke-code" data-id="${code.id}">Cancel</button>` : ""}
+          <button class="btn small danger" data-action="revoke-code" data-id="${code.id}">Cancel</button>` : receiptButtons(code)}
         </td>
       </tr>`;
     }).join("")}</tbody></table>`;
@@ -873,10 +895,11 @@ function renderDrawer() {
           ${codes.length ? `<div class="code-list">${codes.map((code) => {
             const s = codeStatus(code);
             return `<div class="code-item">
-              <div class="grow"><div class="mono">${esc(code.code)}</div><div class="muted" style="font-size:12px">${code.kind === "purchase" ? "Purchase" : "Renewal"} · ${plural(code.years, "year")}${code.amount ? ` · ${rupees(code.amount)}` : ""} · ${fmtDate(code.created_at)}</div></div>
+              <div class="grow"><div class="mono">${esc(code.code)}</div><div class="muted" style="font-size:12px">${code.kind === "purchase" ? "Purchase" : "Renewal"} · ${plural(code.years, "year")} · ${esc(paymentText(code))} · ${fmtDate(code.created_at)}</div>${code.used_at ? `<div class="muted" style="font-size:12px">${esc(receiptText(code))}</div>` : ""}</div>
               <span class="pill tone-${s.tone}">${esc(s.label)}</span>
               ${s.key === "unused" ? `<button class="btn small icon-only" data-action="share-code" data-id="${code.id}" title="Send" aria-label="Send code">${icon("share")}</button>` : ""}
-            </div>`;
+            </div>
+            ${code.used_at ? `<div class="actions-row" style="margin:6px 0 4px">${receiptButtons(code)}</div>` : ""}`;
           }).join("")}</div>` : '<p class="muted" style="margin:0">No codes issued for this hotel yet.</p>'}
         </div>
       </div>
@@ -1026,14 +1049,21 @@ function newCode({ kind = "purchase", device: presetDevice = "" } = {}) {
         </div>
         <div class="field hidden" id="years-other" style="margin-top:8px"><input type="number" name="yearsOther" min="1" max="10" value="2" aria-label="Years"><span class="prefix">years (1–10)</span></div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label class="label" for="amount">Amount received</label><div class="field"><span class="prefix">₹</span><input id="amount" name="amount" type="number" min="0" step="1" required placeholder="0 if free"></div></div>
+        <div><label class="label" for="method">Paid by</label><div class="field"><select id="method" name="method">
+          ${Object.entries(PAYMENT_METHODS).map(([value, label]) => `<option value="${value}">${label}</option>`).join("")}
+        </select></div></div>
+      </div>
       <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:12px">
-        <div><label class="label" for="amount">Amount received</label><div class="field"><span class="prefix">₹</span><input id="amount" name="amount" type="number" min="0" step="1" placeholder="Optional"></div></div>
+        <div><label class="label" for="reference">Payment reference</label><div class="field"><input id="reference" name="reference" maxlength="80" placeholder="UPI / cheque no."></div></div>
         <div><label class="label" for="hotel">For hotel</label><div class="field"><select id="hotel" name="hotel">
           <option value="">Not linked yet</option>
           ${hotels.map((device) => `<option value="${esc(device.device_hash)}"${device.device_hash === presetDevice ? " selected" : ""}>${esc(hotelLabel(device))} · ${shortId(device.device_hash)}</option>`).join("")}
         </select></div></div>
       </div>
-      <div><label class="label" for="note">Note</label><div class="field"><input id="note" name="note" maxlength="200" placeholder="e.g. paid by UPI on 3 Oct, ref 4521"></div></div>
+      <div><label class="label" for="note">Note</label><div class="field"><input id="note" name="note" maxlength="200" placeholder="Anything to remember about this sale"></div></div>
+      <p class="muted" style="margin:0;font-size:12px">When the code is used, the owner is emailed a payment receipt (PDF) with these details. Use ₹0 for a free code; its receipt says complimentary.</p>
       <div class="modal-error"></div>`,
     foot: `<button type="button" class="btn" data-action="close-modal">Cancel</button>
            <button type="submit" class="btn primary">${icon("key")} Create code</button>`,
@@ -1059,10 +1089,13 @@ function newCode({ kind = "purchase", device: presetDevice = "" } = {}) {
         button.disabled = true;
         $(".modal-error", form).innerHTML = "";
         try {
+          if (form.amount.value === "") throw new Error("Enter the amount received (0 for a free code).");
           const { code } = await api("generate-code", {
             kind: selectedKind,
             years: years === "other" ? Number(form.yearsOther.value) : Number(years),
-            amount: form.amount.value === "" ? null : Number(form.amount.value),
+            amount: Number(form.amount.value),
+            paymentMethod: form.method.value,
+            paymentReference: form.reference.value.trim(),
             note: form.note.value.trim(),
             deviceHash: form.hotel.value || undefined,
           });
@@ -1089,7 +1122,7 @@ function showCode(code) {
     wide: true,
     body: `
       <div class="code-hero">
-        <span class="muted" style="font-size:12px;font-weight:600">${code.kind === "purchase" ? "PURCHASE" : "RENEWAL"} · ${plural(code.years, "year").toUpperCase()}${code.amount ? ` · ${rupees(code.amount)}` : ""}</span>
+        <span class="muted" style="font-size:12px;font-weight:600">${code.kind === "purchase" ? "PURCHASE" : "RENEWAL"} · ${plural(code.years, "year").toUpperCase()} · ${esc(paymentText(code).toUpperCase())}</span>
         <span class="mono">${esc(code.code)}</span>
       </div>
       <div><span class="label">Message for the owner</span><textarea class="field" rows="9" readonly id="message">${esc(message)}</textarea></div>
@@ -1101,6 +1134,22 @@ function showCode(code) {
       </div>`,
     foot: `<button type="button" class="btn primary" data-action="close-modal">Done</button>`,
   });
+}
+
+/* ---------------- Receipts ---------------- */
+async function downloadReceipt(id) {
+  try {
+    const { fileName, content } = await api("receipt-pdf", { codeId: Number(id) });
+    const bytes = Uint8Array.from(atob(content), (char) => char.charCodeAt(0));
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+    link.download = fileName;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    await refresh({ quiet: true });
+  } catch (error) {
+    toast(error.message, "error");
+  }
 }
 
 /* ---------------- CSV ---------------- */
@@ -1119,8 +1168,8 @@ function exportCsv() {
     head = ["Hotel", "Computer ID", "Licence code", "Purchased", "Period (years)", "Last renewed", "Valid until", "Status"];
     lines = rows.map((l) => [hotelLabel(deviceFor(l.device_hash)), shortId(l.device_hash), l.code, fmtDate(l.purchased_at), l.period_years, fmtDate(l.last_renewed_at), fmtDate(l.expires_at), licenseStatus(l).label]);
   } else {
-    head = ["Code", "Type", "Years", "Amount (INR)", "Hotel", "Note", "Created", "Status"];
-    lines = rows.map((c) => [c.code, c.kind, c.years, c.amount ?? "", codeDevice(c) ? hotelLabel(codeDevice(c)) : "", c.note, fmtDate(c.created_at), codeStatus(c).label]);
+    head = ["Code", "Type", "Years", "Amount (INR)", "Paid by", "Reference", "Hotel", "Note", "Created", "Status", "Receipt no.", "Receipt emailed"];
+    lines = rows.map((c) => [c.code, c.kind, c.years, c.amount ?? "", PAYMENT_METHODS[c.payment_method] || "", c.payment_reference, codeDevice(c) ? hotelLabel(codeDevice(c)) : "", c.note, fmtDate(c.created_at), codeStatus(c).label, c.receipt_number, c.receipt_sent_at ? fmtDate(c.receipt_sent_at) : ""]);
   }
   const csv = [head, ...lines].map((line) => line.map(quote).join(",")).join("\r\n");
   const link = document.createElement("a");
@@ -1152,6 +1201,10 @@ document.addEventListener("click", (event) => {
     case "copy-message": return void copyText($("#message").value, "Message copied");
     case "new-code": return newCode({ kind: kind || "purchase", device: device || "" });
     case "share-code": return showCode(state.data.codes.find((code) => code.id === Number(id)));
+    case "receipt-pdf": return void downloadReceipt(id);
+    case "send-receipt": return void api("send-receipt", { codeId: Number(id) })
+      .then((result) => { toast(`Receipt ${result.number} sent to ${result.to}`); return refresh({ quiet: true }); })
+      .catch((error) => toast(error.message, "error"));
     case "extend-trial": return extendTrial(device);
     case "set-trial-end": return setTrialEnd(device);
     case "extend-license": return extendLicense(id);
