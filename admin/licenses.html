@@ -4,430 +4,1201 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co; img-src data:; base-uri 'none'; form-action 'none'">
 <title>Swary Licences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <!--
   Swary Soft licence admin, hosted at https://swary.in/admin/licenses.html
   from the hotel-management-site repository (copy this file there after
-  changing it). It also works opened straight from disk. Sign in with the admin password you set in the Supabase dashboard
-  (Edge Functions → Secrets → SWARY_ADMIN_PASSWORD). The password is never
-  saved here. Nothing in this file ships with the app.
+  changing it). It also works opened straight from disk.
+
+  Sign in with the admin password set in the Supabase dashboard (Edge
+  Functions → Secrets → SWARY_ADMIN_PASSWORD). The password is sent once and
+  never stored; the page keeps a 12-hour session instead, and signs out after
+  30 minutes without activity. Nothing in this file ships with the app.
 -->
 <style>
   :root {
-    --canvas: #f5f5f7; --surface: #ffffff; --surface-2: #fafafc; --ink: #1d1d1f; --muted: #6e6e73;
-    --line: #e5e5ea; --accent: #0071e3; --accent-soft: #e8f1fc; --success: #248a3d; --success-soft: #eaf7ee;
-    --warning: #b25000; --warning-soft: #fff4e5; --danger: #c9302c; --danger-soft: #fdecec;
+    --canvas: #f5f5f7; --surface: #ffffff; --surface-2: #fbfbfd; --fill: rgba(0,0,0,.04); --fill-2: rgba(0,0,0,.07);
+    --ink: #1d1d1f; --ink-2: #3a3a3c; --muted: #6e6e73; --faint: #aeaeb2;
+    --line: rgba(0,0,0,.08); --line-strong: rgba(0,0,0,.14);
+    --accent: #0071e3; --accent-hover: #0062c4; --accent-soft: rgba(0,113,227,.10);
+    --brand-a: #5856d6; --brand-b: #0071e3;
+    --success: #1f7a35; --success-soft: rgba(52,199,89,.14);
+    --warning: #a14a00; --warning-soft: rgba(255,149,0,.16);
+    --danger: #c4001a; --danger-soft: rgba(255,59,48,.11);
+    --info: #0063c6; --info-soft: rgba(0,113,227,.10);
+    --violet: #4b49c9; --violet-soft: rgba(88,86,214,.12);
+    --shadow-1: 0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.04);
+    --shadow-2: 0 2px 8px rgba(0,0,0,.06), 0 24px 64px rgba(0,0,0,.14);
+    --backdrop: rgba(20,20,24,.32);
+    --header: rgba(245,245,247,.78);
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --canvas: #000000; --surface: #1c1c1e; --surface-2: #232325; --ink: #f5f5f7; --muted: #98989d;
-      --line: #2c2c2e; --accent: #2997ff; --accent-soft: #10263d; --success: #30d158; --success-soft: #0f2a17;
-      --warning: #ffb35c; --warning-soft: #33240f; --danger: #ff6961; --danger-soft: #3a1513;
+      --canvas: #000000; --surface: #1c1c1e; --surface-2: #232325; --fill: rgba(255,255,255,.06); --fill-2: rgba(255,255,255,.10);
+      --ink: #f5f5f7; --ink-2: #d1d1d6; --muted: #98989d; --faint: #636366;
+      --line: rgba(255,255,255,.08); --line-strong: rgba(255,255,255,.16);
+      --accent: #0a84ff; --accent-hover: #339dff; --accent-soft: rgba(10,132,255,.16);
+      --success: #30d158; --success-soft: rgba(48,209,88,.14);
+      --warning: #ff9f0a; --warning-soft: rgba(255,159,10,.16);
+      --danger: #ff453a; --danger-soft: rgba(255,69,58,.15);
+      --info: #64b5ff; --info-soft: rgba(10,132,255,.16);
+      --violet: #a5a3ff; --violet-soft: rgba(94,92,230,.2);
+      --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.3);
+      --shadow-2: 0 2px 8px rgba(0,0,0,.5), 0 24px 64px rgba(0,0,0,.6);
+      --backdrop: rgba(0,0,0,.55);
+      --header: rgba(0,0,0,.66);
       color-scheme: dark;
     }
   }
+  :root[data-theme="dark"] {
+    --canvas: #000000; --surface: #1c1c1e; --surface-2: #232325; --fill: rgba(255,255,255,.06); --fill-2: rgba(255,255,255,.10);
+    --ink: #f5f5f7; --ink-2: #d1d1d6; --muted: #98989d; --faint: #636366;
+    --line: rgba(255,255,255,.08); --line-strong: rgba(255,255,255,.16);
+    --accent: #0a84ff; --accent-hover: #339dff; --accent-soft: rgba(10,132,255,.16);
+    --success: #30d158; --success-soft: rgba(48,209,88,.14);
+    --warning: #ff9f0a; --warning-soft: rgba(255,159,10,.16);
+    --danger: #ff453a; --danger-soft: rgba(255,69,58,.15);
+    --info: #64b5ff; --info-soft: rgba(10,132,255,.16);
+    --violet: #a5a3ff; --violet-soft: rgba(94,92,230,.2);
+    --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.3);
+    --shadow-2: 0 2px 8px rgba(0,0,0,.5), 0 24px 64px rgba(0,0,0,.6);
+    --backdrop: rgba(0,0,0,.55);
+    --header: rgba(0,0,0,.66);
+    color-scheme: dark;
+  }
+
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--canvas); color: var(--ink); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 28px 16px 60px; }
-  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
-  h1 { margin: 0; font-size: 24px; letter-spacing: -0.3px; }
-  h2 { margin: 0 0 4px; font-size: 16px; }
+  html, body { margin: 0; }
+  body {
+    background: var(--canvas); color: var(--ink);
+    font: 14px/1.5 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased; font-feature-settings: "cv11", "ss01";
+  }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  .mono { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: .95em; letter-spacing: .01em; }
   .muted { color: var(--muted); }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin-bottom: 16px; }
-  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
-  label { display: grid; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
-  input, select { font: inherit; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; min-width: 0; }
-  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
-  button { font: inherit; font-weight: 600; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; padding: 9px 14px; cursor: pointer; }
-  button:hover { background: var(--surface-2); }
-  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  button.danger { color: var(--danger); }
-  button.small { padding: 5px 9px; font-size: 12px; }
-  button:disabled { opacity: 0.5; cursor: default; }
-  .grow { flex: 1 1 260px; }
-  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
-  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
-  .tile b { display: block; font-size: 24px; letter-spacing: -0.4px; }
-  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-  .tabs button[aria-selected="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-  td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  td.actions { white-space: nowrap; text-align: right; }
-  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  .pill { display: inline-block; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-  .ok { background: var(--success-soft); color: var(--success); }
-  .warn { background: var(--warning-soft); color: var(--warning); }
-  .bad { background: var(--danger-soft); color: var(--danger); }
-  .info { background: var(--accent-soft); color: var(--accent); }
-  .plain { background: var(--surface-2); color: var(--muted); }
-  .notice { border-radius: 12px; padding: 10px 12px; margin-top: 12px; font-size: 13px; }
-  .notice.error { background: var(--danger-soft); color: var(--danger); }
-  .notice.done { background: var(--success-soft); color: var(--success); }
-  .code-result { margin-top: 14px; padding: 14px; border-radius: 14px; background: var(--accent-soft); }
-  .code-result .mono { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; }
   .hidden { display: none !important; }
-  dialog { border: 1px solid var(--line); border-radius: 18px; padding: 0; background: var(--surface); color: var(--ink); width: min(420px, calc(100vw - 32px)); }
-  dialog::backdrop { background: rgba(0, 0, 0, 0.35); }
-  dialog form { padding: 20px; display: grid; gap: 12px; }
-  dialog .buttons { display: flex; gap: 8px; justify-content: flex-end; }
-  .empty { padding: 24px; text-align: center; color: var(--muted); }
+  svg.icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  /* Buttons and fields */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    height: 36px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line-strong);
+    background: var(--surface); font-weight: 600; font-size: 13px; cursor: pointer; white-space: nowrap;
+    transition: background .15s, border-color .15s, transform .1s, box-shadow .15s; text-decoration: none; color: var(--ink);
+  }
+  .btn:hover { background: var(--fill); }
+  .btn:active { transform: scale(.98); }
+  .btn:focus-visible, .field:focus-within, .chip:focus-visible, .tab:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 1px; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 1px 2px rgba(0,113,227,.3); }
+  .btn.primary:hover { background: var(--accent-hover); }
+  .btn.ghost { border-color: transparent; background: transparent; }
+  .btn.ghost:hover { background: var(--fill); }
+  .btn.danger { color: var(--danger); }
+  .btn.danger:hover { background: var(--danger-soft); border-color: transparent; }
+  .btn.small { height: 30px; padding: 0 10px; font-size: 12px; border-radius: 8px; }
+  .btn.icon-only { width: 36px; padding: 0; }
+  .btn.small.icon-only { width: 30px; }
+  .btn[disabled], .btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+  .label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+  .field {
+    display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 12px;
+    border: 1px solid var(--line-strong); border-radius: 11px; background: var(--surface-2); transition: border-color .15s, background .15s;
+  }
+  .field:focus-within { border-color: var(--accent); background: var(--surface); }
+  .field input, .field select { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; height: 100%; }
+  .field .prefix { color: var(--muted); font-weight: 600; }
+  textarea.field { height: auto; padding: 10px 12px; resize: vertical; width: 100%; line-height: 1.55; outline: 0; }
+
+  /* Sign-in */
+  .signin { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px;
+    background: radial-gradient(900px 500px at 15% -10%, var(--violet-soft), transparent 60%), radial-gradient(800px 500px at 110% 110%, var(--accent-soft), transparent 60%), var(--canvas); }
+  .signin-card { width: min(420px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 34px 30px 28px; box-shadow: var(--shadow-2); animation: rise .35s cubic-bezier(.2,.9,.25,1); }
+  .brand-mark { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 22px;
+    background: linear-gradient(135deg, var(--brand-a), var(--brand-b)); box-shadow: 0 8px 22px rgba(88,86,214,.35), inset 0 1px 0 rgba(255,255,255,.25); }
+  .brand-mark.small { width: 34px; height: 34px; border-radius: 10px; font-size: 15px; box-shadow: 0 4px 12px rgba(88,86,214,.3); }
+  .signin h1 { margin: 18px 0 4px; font-size: 26px; letter-spacing: -.4px; }
+  .check { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--ink-2); cursor: pointer; user-select: none; }
+  .check input { width: 16px; height: 16px; accent-color: var(--accent); }
+  details.advanced summary { cursor: pointer; font-size: 12px; color: var(--muted); list-style: none; }
+  details.advanced summary::-webkit-details-marker { display: none; }
+
+  /* App shell */
+  header.top { position: sticky; top: 0; z-index: 20; background: var(--header); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--line); }
+  .bar { max-width: 1280px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 12px; }
+  .bar .title { font-weight: 700; font-size: 15px; letter-spacing: -.2px; }
+  .bar .sub { font-size: 12px; color: var(--muted); }
+  .bar .spacer { flex: 1; }
+  .synced { font-size: 12px; color: var(--muted); }
+  main { max-width: 1280px; margin: 0 auto; padding: 26px 24px 80px; }
+  .page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  .page-head h1 { margin: 0; font-size: 28px; letter-spacing: -.5px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+  @media (max-width: 1180px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } .tiles .tile:last-child { grid-column: span 2; } }
+  .tile { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px 15px; box-shadow: var(--shadow-1);
+    cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; }
+  .tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+  .tile.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .tile .top { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .tile .glyph { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; }
+  .tile b { display: block; margin-top: 8px; font-size: 26px; letter-spacing: -.6px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile .hint { font-size: 11px; color: var(--muted); }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-1); }
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .tabs { display: inline-flex; padding: 3px; gap: 2px; border-radius: 12px; background: var(--fill); }
+  .tab { border: 0; background: transparent; height: 32px; padding: 0 14px; border-radius: 9px; font-weight: 600; font-size: 13px; color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+  .tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .tab .count { font-size: 11px; padding: 1px 7px; border-radius: 999px; background: var(--fill-2); color: var(--muted); }
+  .search { flex: 1 1 240px; max-width: 360px; height: 38px; margin-left: auto; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 16px 0; }
+  .chip { border: 1px solid var(--line-strong); background: transparent; height: 30px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--ink-2); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .chip:hover { background: var(--fill); }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+  .chip .n { opacity: .65; font-weight: 500; }
+
+  .table-wrap { overflow-x: auto; padding: 6px 4px 8px; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+  th { position: sticky; top: 0; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface); }
+  td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  tbody tr { transition: background .12s; }
+  tbody tr.clickable { cursor: pointer; }
+  tbody tr:hover { background: var(--fill); }
+  td.actions { text-align: right; white-space: nowrap; }
+  td .sub { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .who { display: flex; align-items: center; gap: 11px; min-width: 190px; }
+  .avatar { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #fff; flex: none; }
+  .who b { font-weight: 600; }
+
+  .pill { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .tone-success { background: var(--success-soft); color: var(--success); }
+  .tone-warning { background: var(--warning-soft); color: var(--warning); }
+  .tone-danger { background: var(--danger-soft); color: var(--danger); }
+  .tone-info { background: var(--info-soft); color: var(--info); }
+  .tone-violet { background: var(--violet-soft); color: var(--violet); }
+  .tone-neutral { background: var(--fill-2); color: var(--muted); }
+
+  .empty { padding: 56px 16px; text-align: center; color: var(--muted); }
+  .empty .glyph { width: 46px; height: 46px; margin: 0 auto 12px; border-radius: 14px; display: grid; place-items: center; background: var(--fill); }
+  .empty b { display: block; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+  .skeleton { height: 14px; border-radius: 7px; background: linear-gradient(90deg, var(--fill) 0%, var(--fill-2) 50%, var(--fill) 100%); background-size: 200% 100%; animation: shimmer 1.2s infinite; }
+
+  /* Drawer, modals, toasts */
+  .backdrop { position: fixed; inset: 0; background: var(--backdrop); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 40; animation: fade .2s ease-out; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(500px, 100vw); background: var(--surface); z-index: 41; box-shadow: var(--shadow-2); display: flex; flex-direction: column; animation: slide .28s cubic-bezier(.2,.9,.25,1); border-left: 1px solid var(--line); }
+  .drawer-head { padding: 20px 22px 16px; border-bottom: 1px solid var(--line); display: flex; gap: 14px; align-items: flex-start; }
+  .drawer-head .avatar { width: 46px; height: 46px; border-radius: 14px; font-size: 17px; }
+  .drawer-head h2 { margin: 0; font-size: 18px; letter-spacing: -.3px; }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 8px 22px 28px; }
+  .contact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 16px 0 6px; }
+  .contact .btn { height: 40px; }
+  .section { padding: 18px 0 4px; }
+  .section + .section { border-top: 1px solid var(--line); }
+  .section h3 { margin: 0 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); display: flex; align-items: center; justify-content: space-between; }
+  .section h3 .pill { text-transform: none; letter-spacing: 0; }
+  .kv { display: grid; grid-template-columns: 130px 1fr; gap: 9px 12px; font-size: 13px; }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+  .section .actions-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .code-list { display: grid; gap: 8px; }
+  .code-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
+  .code-item .grow { flex: 1; min-width: 0; }
+
+  .modal-wrap { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; }
+  .modal { width: min(460px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow-2); animation: pop .25s cubic-bezier(.2,.9,.25,1); position: relative; z-index: 51; }
+  .modal.wide { width: min(560px, 100%); }
+  .modal-head { padding: 22px 24px 4px; }
+  .modal-head h2 { margin: 0; font-size: 19px; letter-spacing: -.3px; }
+  .modal-head p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+  .modal-body { padding: 16px 24px 8px; display: grid; gap: 14px; }
+  .modal-foot { padding: 16px 24px 22px; display: flex; gap: 10px; justify-content: flex-end; }
+  .segmented { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 3px; gap: 3px; border-radius: 12px; background: var(--fill); }
+  .segmented button { border: 0; background: transparent; height: 34px; border-radius: 9px; font-weight: 600; font-size: 13px; color: var(--muted); cursor: pointer; }
+  .segmented button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .error-note { border-radius: 12px; padding: 10px 12px; font-size: 13px; background: var(--danger-soft); color: var(--danger); }
+  .info-note { border-radius: 12px; padding: 10px 12px; font-size: 13px; background: var(--info-soft); color: var(--info); }
+  .code-hero { text-align: center; padding: 18px; border-radius: 18px; background: linear-gradient(135deg, var(--violet-soft), var(--accent-soft)); }
+  .code-hero .mono { display: block; font-size: 22px; font-weight: 700; letter-spacing: .06em; margin: 6px 0 2px; color: var(--ink); }
+  .share { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+
+  .toasts { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; display: grid; gap: 8px; justify-items: center; pointer-events: none; }
+  .toast { display: inline-flex; align-items: center; gap: 9px; padding: 11px 16px; border-radius: 14px; background: var(--ink); color: var(--surface); font-weight: 600; font-size: 13px; box-shadow: var(--shadow-2); animation: rise .25s cubic-bezier(.2,.9,.25,1); }
+  .toast.error { background: var(--danger); color: #fff; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+  @keyframes slide { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+  @media (max-width: 720px) {
+    .bar { padding: 10px 16px; }
+    .bar .sub, .synced, .hide-sm { display: none; }
+    main { padding: 18px 16px 72px; }
+    .page-head h1 { font-size: 23px; }
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tiles .tile:last-child { grid-column: span 2; }
+    .search { max-width: none; margin-left: 0; }
+    .kv { grid-template-columns: 110px 1fr; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div>
-      <h1>Swary Licences</h1>
-      <div class="muted">Hotel Management · trials, licences and codes</div>
-    </div>
-    <button id="refresh" class="hidden">Refresh</button>
-  </header>
-
-  <section class="card" id="connect">
-    <h2>Sign in</h2>
-    <p class="muted" style="margin:0 0 12px">Use the admin password you set in Supabase → Edge Functions → Secrets → <span class="mono">SWARY_ADMIN_PASSWORD</span>. Forgot it? Set a new one there.</p>
-    <form class="row" id="connect-form">
-      <label class="grow">Function URL
-        <input id="url" required value="https://zwgvbqgseobzfniroieh.supabase.co/functions/v1/license-admin">
-      </label>
-      <label class="grow">Admin password
-        <input id="password" type="password" required autocomplete="current-password">
-      </label>
-      <button class="primary" type="submit">Sign in</button>
-    </form>
-    <div id="connect-notice"></div>
-  </section>
-
-  <div id="app" class="hidden">
-    <div class="tiles" id="tiles"></div>
-
-    <section class="card">
-      <h2>Generate a code</h2>
-      <p class="muted" style="margin:0 0 12px">A purchase code activates a licence (and moves it if the owner changes computer). A renewal code extends an existing licence.</p>
-      <form class="row" id="generate-form">
-        <label>Kind
-          <select id="kind">
-            <option value="purchase">Purchase (new licence)</option>
-            <option value="renewal">Renewal</option>
-          </select>
-        </label>
-        <label>Period
-          <select id="years">
-            <option value="1">1 year</option>
-            <option value="3">3 years</option>
-            <option value="5">5 years</option>
-            <option value="2">2 years</option>
-            <option value="4">4 years</option>
-            <option value="10">10 years</option>
-          </select>
-        </label>
-        <label class="grow">Note (who it's for)
-          <input id="note" maxlength="200" placeholder="e.g. Hotel Rohini, paid ₹… on 3 Oct">
-        </label>
-        <button class="primary" type="submit">Generate</button>
-      </form>
-      <div id="code-result" class="code-result hidden"></div>
-    </section>
-
-    <section class="card">
-      <div class="row" style="justify-content:space-between;margin-bottom:12px">
-        <div class="tabs" role="tablist">
-          <button role="tab" data-tab="devices" aria-selected="true">Computers</button>
-          <button role="tab" data-tab="licenses" aria-selected="false">Licences</button>
-          <button role="tab" data-tab="codes" aria-selected="false">Codes</button>
-        </div>
-        <input id="search" type="search" placeholder="Search hotel, email, computer, code…" style="flex:0 1 320px">
-      </div>
-      <div id="notice"></div>
-      <div class="table-wrap" id="table"></div>
-    </section>
-  </div>
-</div>
-
-<dialog id="dialog">
-  <form method="dialog" id="dialog-form">
-    <h2 id="dialog-title"></h2>
-    <p class="muted" id="dialog-text" style="margin:0"></p>
-    <div id="dialog-fields" style="display:grid;gap:10px"></div>
-    <div class="buttons">
-      <button value="cancel" formnovalidate>Cancel</button>
-      <button value="ok" class="primary" id="dialog-ok">Save</button>
-    </div>
-  </form>
-</dialog>
+<div id="root"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
 
 <script>
 "use strict";
 
+// Never run inside another site's frame.
+if (window.top !== window.self) window.top.location = window.self.location.href;
+
+const DEFAULT_URL = "https://zwgvbqgseobzfniroieh.supabase.co/functions/v1/license-admin";
+const SUPPORT = "support@swary.in";
 const DAY = 86400000;
-const $ = (id) => document.getElementById(id);
-let data = null;
-let tab = "devices";
+const IDLE_LIMIT_MS = 30 * 60000;
 
-// The password stays in memory only. The function URL is remembered when
-// the browser allows it (some block storage for pages opened from a file).
-const connection = { url: "", password: "" };
-const rememberedUrl = () => { try { return localStorage.getItem("swary-admin-url") || ""; } catch { return ""; } };
-const rememberUrl = (url) => { try { localStorage.setItem("swary-admin-url", url); } catch { /* storage unavailable */ } };
+const state = {
+  url: "", session: null, data: null, syncedAt: 0,
+  tab: "hotels", filter: "all", query: "", drawer: null, lastActivity: Date.now(),
+};
 
+/* ---------------- Storage (some browsers block it for local files) ---------------- */
+const storage = {
+  get(area, key) { try { return window[area].getItem(key); } catch { return null; } },
+  set(area, key, value) { try { window[area].setItem(key, value); } catch { /* unavailable */ } },
+  remove(area, key) { try { window[area].removeItem(key); } catch { /* unavailable */ } },
+};
+
+function saveSession(session, remember) {
+  storage.remove("localStorage", "swary-admin-session");
+  storage.remove("sessionStorage", "swary-admin-session");
+  if (session) storage.set(remember ? "localStorage" : "sessionStorage", "swary-admin-session", JSON.stringify(session));
+}
+
+function savedSession() {
+  for (const area of ["sessionStorage", "localStorage"]) {
+    try {
+      const session = JSON.parse(storage.get(area, "swary-admin-session") || "null");
+      if (session?.token && Date.parse(session.expiresAt) > Date.now()) return session;
+    } catch { /* ignore */ }
+  }
+  return null;
+}
+
+/* ---------------- Helpers ---------------- */
+const $ = (selector, scope = document) => scope.querySelector(selector);
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 const shortId = (hash) => hash ? `${hash.slice(0, 4)}-${hash.slice(4, 8)}`.toUpperCase() : "—";
-const date = (value) => value ? new Date(value).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) : "—";
-const dateTime = (value) => value ? new Date(value).toLocaleString(undefined, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) : "—";
-const daysLeft = (value) => Math.ceil((Date.parse(value) - Date.now()) / DAY);
+const daysUntil = (value) => Math.ceil((Date.parse(value) - Date.now()) / DAY);
+const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+function fmtDate(value) {
+  return value ? new Date(value).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "—";
+}
+function fmtDateTime(value) {
+  return value ? new Date(value).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" }) : "—";
+}
+function ago(value) {
+  if (!value) return "—";
+  const minutes = Math.round((Date.now() - Date.parse(value)) / 60000);
+  if (minutes < 1) return "just now";
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `${hours} h ago`;
+  const days = Math.round(hours / 24);
+  return days < 30 ? `${days} d ago` : fmtDate(value);
+}
+const rupees = (amount) => `₹${Number(amount || 0).toLocaleString("en-IN", { maximumFractionDigits: 2 })}`;
+const todayInput = (value) => new Date(value || Date.now()).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
 
-function endPill(value) {
-  const days = daysLeft(value);
-  const cls = days <= 0 ? "bad" : days <= 7 ? "warn" : "ok";
-  const text = days <= 0 ? `ended ${date(value)}` : `${date(value)} · ${days}d`;
-  return `<span class="pill ${cls}">${esc(text)}</span>`;
+const AVATAR_COLORS = ["#5856d6", "#0071e3", "#34aadc", "#30b0c7", "#32a852", "#ff9500", "#ff2d55", "#af52de", "#a2845e"];
+function avatar(name, seed) {
+  const text = String(name || "?").trim();
+  const initials = text.split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase() || "?";
+  let hash = 0;
+  for (const char of String(seed || text)) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  return `<span class="avatar" style="background:${AVATAR_COLORS[hash % AVATAR_COLORS.length]}">${esc(initials)}</span>`;
 }
 
-function showNotice(target, text, kind = "error") {
-  $(target).innerHTML = text ? `<div class="notice ${kind}">${esc(text)}</div>` : "";
+const ICONS = {
+  refresh: '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+  plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  search: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+  download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+  copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  chat: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',
+  mail: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  close: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+  sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
+  moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+  monitor: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+  key: '<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  home: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  alert: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  check: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+  eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+  lock: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  trend: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
+};
+const icon = (name) => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ""}</svg>`;
+
+/* ---------------- Toasts ---------------- */
+function toast(message, kind = "ok") {
+  const element = document.createElement("div");
+  element.className = `toast${kind === "error" ? " error" : ""}`;
+  element.innerHTML = `${icon(kind === "error" ? "alert" : "check")}<span>${esc(message)}</span>`;
+  $("#toasts").append(element);
+  setTimeout(() => element.remove(), kind === "error" ? 6000 : 3200);
 }
 
-async function call(action, body = {}) {
-  const response = await fetch(connection.url, {
-    method: "POST",
-    headers: { "content-type": "application/json", "x-swary-admin-password": connection.password },
-    body: JSON.stringify({ action, ...body }),
-  });
-  const result = await response.json().catch(() => ({ error: true, message: `HTTP ${response.status}` }));
-  if (!response.ok || result.error) throw new Error(result.message || `HTTP ${response.status}`);
+async function copyText(text, label = "Copied") {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const area = document.createElement("textarea");
+    area.value = text;
+    document.body.append(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+  }
+  toast(label);
+}
+
+/* ---------------- Theme ---------------- */
+function currentTheme() { return storage.get("localStorage", "swary-admin-theme") || "system"; }
+function applyTheme(theme) {
+  if (theme === "system") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", theme);
+}
+function cycleTheme() {
+  const next = { system: "light", light: "dark", dark: "system" }[currentTheme()];
+  storage.set("localStorage", "swary-admin-theme", next);
+  applyTheme(next);
+  renderApp();
+  toast(`Theme: ${next === "system" ? "match this device" : next}`);
+}
+applyTheme(currentTheme());
+
+/* ---------------- Service ---------------- */
+async function api(action, body = {}) {
+  let response;
+  try {
+    response = await fetch(state.url, {
+      method: "POST",
+      headers: { "content-type": "application/json", ...(state.session ? { "x-swary-admin-session": state.session.token } : {}) },
+      body: JSON.stringify({ action, ...body }),
+    });
+  } catch {
+    throw new Error("Couldn't reach the licence service. Check the Internet connection.");
+  }
+  const result = await response.json().catch(() => ({ error: true, message: `The service replied ${response.status}.` }));
+  if (response.status === 401 && result.signedOut) {
+    signOut("Your session has ended. Sign in again.");
+    throw new Error(result.message);
+  }
+  if (!response.ok || result.error) throw new Error(result.message || `The service replied ${response.status}.`);
   return result;
 }
 
-async function load() {
-  data = await call("overview");
-  $("connect").classList.add("hidden");
-  $("app").classList.remove("hidden");
-  $("refresh").classList.remove("hidden");
-  render();
+async function refresh({ quiet = false } = {}) {
+  if (!state.session) return;
+  if (!quiet) renderApp();
+  try {
+    state.data = await api("overview");
+    state.syncedAt = Date.now();
+  } catch (error) {
+    if (state.session) toast(error.message, "error");
+  } finally {
+    if (state.session) {
+      renderApp();
+      if (state.drawer) renderDrawer();
+    }
+  }
 }
 
-function licenseForDevice(hash) {
-  return data.licenses.find((license) => license.device_hash === hash && !license.revoked_at);
+function signOut(message = "") {
+  saveSession(null);
+  state.session = null;
+  state.data = null;
+  state.drawer = null;
+  closeModal();
+  $("#drawer-layer")?.remove();
+  renderSignIn(message);
 }
 
-function deviceFor(license) {
-  return data.devices.find((device) => device.device_hash === license.device_hash);
+/* ---------------- Derived data ---------------- */
+function licenseFor(hash) {
+  return state.data.licenses.find((license) => license.device_hash === hash && !license.revoked_at) || null;
+}
+function deviceFor(hash) {
+  return state.data.devices.find((device) => device.device_hash === hash) || null;
+}
+function hotelLabel(device) {
+  return device?.hotel_name || device?.device_name || (device ? `Computer ${shortId(device.device_hash)}` : "—");
 }
 
-function renderTiles() {
-  const now = Date.now();
-  const licensed = new Set(data.licenses.filter((l) => !l.revoked_at && l.device_hash).map((l) => l.device_hash));
-  const trials = data.devices.filter((d) => !licensed.has(d.device_hash) && Date.parse(d.trial_ends_at) > now);
-  const tiles = [
-    ["Computers", data.devices.length],
-    ["On free trial", trials.length],
-    ["Trials ending in 7 days", trials.filter((d) => Date.parse(d.trial_ends_at) - now <= 7 * DAY).length],
-    ["Active licences", data.licenses.filter((l) => !l.revoked_at && Date.parse(l.expires_at) > now).length],
-    ["Licences ending in 30 days", data.licenses.filter((l) => !l.revoked_at && Date.parse(l.expires_at) > now && Date.parse(l.expires_at) - now <= 30 * DAY).length],
-    ["Unused codes", data.codes.filter((c) => !c.used_at && !c.revoked_at).length],
-  ];
-  $("tiles").innerHTML = tiles.map(([label, value]) => `<div class="tile"><span class="muted">${esc(label)}</span><b>${value}</b></div>`).join("");
+function deviceStatus(device) {
+  const license = licenseFor(device.device_hash);
+  if (license) {
+    const left = daysUntil(license.expires_at);
+    if (left <= 0) return { key: "expired", label: "Subscription ended", tone: "danger" };
+    if (left <= 30) return { key: "renewal", label: `Renewal due · ${left}d`, tone: "warning" };
+    return { key: "licensed", label: "Licensed", tone: "success" };
+  }
+  const left = daysUntil(device.trial_ends_at);
+  if (left <= 0) return { key: "trial-ended", label: "Trial ended", tone: "danger" };
+  if (left <= 7) return { key: "trial-ending", label: `Trial · ${left}d left`, tone: "warning" };
+  return { key: "trial", label: `Trial · ${left}d left`, tone: "info" };
 }
 
-function matches(...values) {
-  const query = $("search").value.trim().toLowerCase();
+function licenseStatus(license) {
+  if (license.revoked_at) return { key: "cancelled", label: "Cancelled", tone: "neutral" };
+  const left = daysUntil(license.expires_at);
+  if (left <= 0) return { key: "expired", label: "Ended", tone: "danger" };
+  if (left <= 30) return { key: "renewal", label: `Due · ${left}d`, tone: "warning" };
+  return { key: "active", label: "Active", tone: "success" };
+}
+
+function codeStatus(code) {
+  if (code.revoked_at) return { key: "cancelled", label: "Cancelled", tone: "neutral" };
+  if (code.used_at) return { key: "used", label: `Used ${fmtDate(code.used_at)}`, tone: "violet" };
+  return { key: "unused", label: "Unused", tone: "info" };
+}
+
+/** The hotel a code belongs to: the computer it was issued for, else the one using its licence. */
+function codeDevice(code) {
+  if (code.for_device_hash) return deviceFor(code.for_device_hash);
+  const license = code.license_id && state.data.licenses.find((item) => item.id === code.license_id);
+  return license ? deviceFor(license.device_hash) : null;
+}
+
+const HOTEL_FILTERS = [
+  ["all", "All", () => true],
+  ["trial", "On trial", (s) => s.key === "trial" || s.key === "trial-ending"],
+  ["trial-ending", "Trial ending", (s) => s.key === "trial-ending"],
+  ["licensed", "Licensed", (s) => s.key === "licensed" || s.key === "renewal"],
+  ["renewal", "Renewal due", (s) => s.key === "renewal"],
+  ["locked", "Locked", (s) => s.key === "trial-ended" || s.key === "expired"],
+];
+const LICENSE_FILTERS = [
+  ["all", "All", () => true],
+  ["active", "Active", (s) => s.key === "active" || s.key === "renewal"],
+  ["renewal", "Renewal due", (s) => s.key === "renewal"],
+  ["expired", "Ended", (s) => s.key === "expired"],
+  ["cancelled", "Cancelled", (s) => s.key === "cancelled"],
+];
+const CODE_FILTERS = [
+  ["all", "All", () => true],
+  ["unused", "Unused", (s) => s.key === "unused"],
+  ["used", "Used", (s) => s.key === "used"],
+  ["cancelled", "Cancelled", (s) => s.key === "cancelled"],
+];
+
+function matchesQuery(...values) {
+  const query = state.query.trim().toLowerCase();
   return !query || values.some((value) => String(value ?? "").toLowerCase().includes(query));
 }
 
-function renderDevices() {
-  const rows = data.devices
-    .filter((d) => matches(d.hotel_name, d.owner_name, d.owner_email, d.owner_phone, d.device_name, shortId(d.device_hash)))
-    .map((d) => {
-      const license = licenseForDevice(d.device_hash);
-      return `<tr>
-        <td><b>${esc(d.hotel_name || "Not set up yet")}</b><div class="muted">${esc(d.owner_name || "")}</div></td>
-        <td>${esc(d.owner_email || "—")}<div class="muted">${esc(d.owner_phone || "")}</div></td>
-        <td>${esc(d.device_name || "—")}<div class="muted mono">${shortId(d.device_hash)}</div></td>
-        <td>${esc(d.app_version || "—")}</td>
-        <td>${license ? '<span class="pill plain">Licensed</span>' : endPill(d.trial_ends_at)}<div class="muted">since ${date(d.trial_started_at)}</div></td>
-        <td>${license ? `${endPill(license.expires_at)}<div class="muted mono">${esc(license.code)}</div>` : "—"}</td>
-        <td>${dateTime(d.last_seen_at)}</td>
-        <td class="actions"><button class="small" data-action="extend-trial" data-id="${esc(d.device_hash)}">Extend trial</button></td>
-      </tr>`;
-    });
-  return table(["Hotel", "Owner", "Computer", "Version", "Free trial", "Licence", "Last seen", ""], rows);
-}
-
-function renderLicenses() {
-  const rows = data.licenses
-    .filter((l) => { const d = deviceFor(l) || {}; return matches(l.code, d.hotel_name, d.owner_email, d.device_name, shortId(l.device_hash)); })
-    .map((l) => {
-      const d = deviceFor(l) || {};
-      const status = l.revoked_at ? '<span class="pill bad">Cancelled</span>' : endPill(l.expires_at);
-      return `<tr>
-        <td class="mono">${esc(l.code)}</td>
-        <td><b>${esc(d.hotel_name || "—")}</b><div class="muted">${esc(d.owner_email || "")}</div></td>
-        <td>${esc(d.device_name || "—")}<div class="muted mono">${shortId(l.device_hash)}</div></td>
-        <td>${date(l.purchased_at)}</td>
-        <td>${l.period_years} yr${l.last_renewed_at ? `<div class="muted">renewed ${date(l.last_renewed_at)}</div>` : ""}</td>
-        <td>${status}</td>
-        <td class="actions">
-          ${l.revoked_at
-            ? `<button class="small" data-action="restore-license" data-id="${l.id}">Restore</button>`
-            : `<button class="small" data-action="extend-license" data-id="${l.id}">Extend</button>
-               <button class="small" data-action="set-license-end" data-id="${l.id}">Set end date</button>
-               <button class="small danger" data-action="revoke-license" data-id="${l.id}">Cancel</button>`}
-        </td>
-      </tr>`;
-    });
-  return table(["Code", "Hotel", "Computer", "Purchased", "Period", "Valid until", ""], rows);
-}
-
-function renderCodes() {
-  const rows = data.codes
-    .filter((c) => matches(c.code, c.note, c.kind))
-    .map((c) => {
-      const license = c.license_id && data.licenses.find((l) => l.id === c.license_id);
-      const hotel = license && (deviceFor(license) || {}).hotel_name;
-      const status = c.revoked_at ? '<span class="pill bad">Cancelled</span>'
-        : c.used_at ? `<span class="pill plain">Used ${date(c.used_at)}</span>`
-        : '<span class="pill info">Unused</span>';
-      return `<tr>
-        <td class="mono">${esc(c.code)}</td>
-        <td>${c.kind === "purchase" ? "Purchase" : "Renewal"}</td>
-        <td>${c.years} yr</td>
-        <td>${esc(c.note || "—")}</td>
-        <td>${date(c.created_at)}</td>
-        <td>${status}${hotel ? `<div class="muted">${esc(hotel)}</div>` : ""}</td>
-        <td class="actions">
-          <button class="small" data-action="copy" data-id="${esc(c.code)}">Copy</button>
-          ${!c.used_at && !c.revoked_at ? `<button class="small danger" data-action="revoke-code" data-id="${c.id}">Cancel</button>` : ""}
-        </td>
-      </tr>`;
-    });
-  return table(["Code", "Kind", "Period", "Note", "Created", "Status", ""], rows);
-}
-
-function table(head, rows) {
-  if (!rows.length) return '<div class="empty">Nothing here yet.</div>';
-  return `<table><thead><tr>${head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`;
-}
-
-function render() {
-  renderTiles();
-  for (const button of document.querySelectorAll("[data-tab]")) {
-    button.setAttribute("aria-selected", String(button.dataset.tab === tab));
+function rowsFor(tab, filterKey = state.filter, applyQuery = true) {
+  const { devices, licenses, codes } = state.data;
+  if (tab === "hotels") {
+    const test = (HOTEL_FILTERS.find(([key]) => key === filterKey) || HOTEL_FILTERS[0])[2];
+    return devices.filter((device) => test(deviceStatus(device)) && (!applyQuery ||
+      matchesQuery(device.hotel_name, device.owner_name, device.owner_email, device.owner_phone, device.device_name, shortId(device.device_hash), licenseFor(device.device_hash)?.code)));
   }
-  $("table").innerHTML = tab === "devices" ? renderDevices() : tab === "licenses" ? renderLicenses() : renderCodes();
-}
-
-/** A small form in a dialog; resolves to the field values, or null if cancelled. */
-function ask(title, text, fields, okLabel = "Save") {
-  $("dialog-title").textContent = title;
-  $("dialog-text").textContent = text;
-  $("dialog-ok").textContent = okLabel;
-  $("dialog-fields").innerHTML = fields.map((f) => `<label>${esc(f.label)}
-    <input name="${f.name}" type="${f.type || "number"}" value="${esc(f.value ?? "")}" ${f.type === "date" ? "" : `min="${f.min ?? 0}" max="${f.max ?? 3650}"`} ${f.required ? "required" : ""}>
-  </label>`).join("");
-  const dialog = $("dialog");
-  dialog.returnValue = "";
-  dialog.showModal();
-  return new Promise((resolve) => {
-    dialog.addEventListener("close", () => {
-      if (dialog.returnValue !== "ok") return resolve(null);
-      resolve(Object.fromEntries(fields.map((f) => [f.name, dialog.querySelector(`[name="${f.name}"]`).value])));
-    }, { once: true });
+  if (tab === "licenses") {
+    const test = (LICENSE_FILTERS.find(([key]) => key === filterKey) || LICENSE_FILTERS[0])[2];
+    return licenses.filter((license) => {
+      const device = deviceFor(license.device_hash) || {};
+      return test(licenseStatus(license)) && (!applyQuery || matchesQuery(license.code, device.hotel_name, device.owner_name, device.owner_email, shortId(license.device_hash)));
+    });
+  }
+  const test = (CODE_FILTERS.find(([key]) => key === filterKey) || CODE_FILTERS[0])[2];
+  return codes.filter((code) => {
+    const device = codeDevice(code) || {};
+    return test(codeStatus(code)) && (!applyQuery || matchesQuery(code.code, code.note, code.kind, device.hotel_name, device.owner_name));
   });
 }
 
-async function act(action, id) {
-  try {
-    if (action === "copy") {
-      await navigator.clipboard.writeText(id);
-      return showNotice("notice", `Copied ${id}.`, "done");
+/* ---------------- Sign-in ---------------- */
+function renderSignIn(message = "") {
+  $("#root").innerHTML = `
+    <div class="signin">
+      <form class="signin-card" id="signin-form" autocomplete="on">
+        <div class="brand-mark">S</div>
+        <h1>Swary Licences</h1>
+        <p class="muted" style="margin:0 0 22px">Trials, licences and codes for Swary Hotel Management.</p>
+        ${message ? `<div class="info-note" style="margin-bottom:16px">${esc(message)}</div>` : ""}
+        <input type="text" name="username" value="swary-admin" autocomplete="username" class="hidden" aria-hidden="true" tabindex="-1">
+        <label class="label" for="password">Admin password</label>
+        <div class="field">
+          ${icon("lock")}
+          <input id="password" type="password" required autocomplete="current-password" placeholder="Your admin password">
+          <button type="button" class="btn ghost small icon-only" id="toggle-password" aria-label="Show password">${icon("eye")}</button>
+        </div>
+        <label class="check" style="margin:14px 0 18px"><input type="checkbox" id="remember"> Keep me signed in on this device for 12 hours</label>
+        <div id="signin-error"></div>
+        <button class="btn primary" type="submit" id="signin-button" style="width:100%;height:44px;font-size:14px">Sign in</button>
+        <details class="advanced" style="margin-top:18px">
+          <summary>Forgot the password, or need a different service address?</summary>
+          <p class="muted" style="font-size:12px;margin:10px 0">Set a new password in the Supabase dashboard: Edge Functions → Secrets → <span class="mono">SWARY_ADMIN_PASSWORD</span> (12 or more characters). It works at once and signs every session out.</p>
+          <label class="label" for="service-url">Service address</label>
+          <div class="field"><input id="service-url" value="${esc(state.url || DEFAULT_URL)}" spellcheck="false"></div>
+        </details>
+      </form>
+    </div>`;
+
+  $("#toggle-password").addEventListener("click", () => {
+    const input = $("#password");
+    input.type = input.type === "password" ? "text" : "password";
+  });
+  $("#signin-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = $("#signin-button");
+    button.disabled = true;
+    button.textContent = "Signing in…";
+    $("#signin-error").innerHTML = "";
+    state.url = $("#service-url").value.trim() || DEFAULT_URL;
+    storage.set("localStorage", "swary-admin-url", state.url);
+    try {
+      state.session = null;
+      const session = await api("sign-in", { password: $("#password").value });
+      state.session = { token: session.token, expiresAt: session.expiresAt };
+      saveSession(state.session, $("#remember").checked);
+      state.lastActivity = Date.now();
+      state.tab = "hotels";
+      state.filter = "all";
+      state.query = "";
+      await refresh();
+    } catch (error) {
+      $("#signin-error").innerHTML = `<div class="error-note" style="margin-bottom:14px">${esc(error.message)}</div>`;
+      button.disabled = false;
+      button.textContent = "Sign in";
     }
-    if (action === "extend-trial") {
-      const device = data.devices.find((d) => d.device_hash === id);
-      const values = await ask("Extend free trial", `${device.hotel_name || device.device_name || shortId(id)} — trial ends ${date(device.trial_ends_at)}. Days are added from that date, or from today if it has passed.`, [{ name: "days", label: "Days to add", value: 7, min: 1, required: true }]);
-      if (!values) return;
-      await call("extend-trial", { deviceHash: id, days: Number(values.days) });
-    } else if (action === "extend-license") {
-      const values = await ask("Extend licence", "Added from the current end date, or from today if it has ended.", [
-        { name: "years", label: "Years", value: 1, min: 0, max: 10 },
-        { name: "days", label: "Days", value: 0, min: 0 },
-      ]);
-      if (!values) return;
-      await call("extend-license", { licenseId: Number(id), years: Number(values.years || 0), days: Number(values.days || 0) });
-    } else if (action === "set-license-end") {
-      const license = data.licenses.find((l) => l.id === Number(id));
-      const values = await ask("Set end date", "The subscription ends at the end of this day (India time).", [
-        { name: "date", label: "End date", type: "date", value: license.expires_at.slice(0, 10), required: true },
-      ]);
-      if (!values) return;
-      await call("set-license-end", { licenseId: Number(id), date: values.date });
-    } else if (action === "revoke-license") {
-      if (!confirm("Cancel this licence? The computer using it locks at its next check.")) return;
-      await call("revoke-license", { licenseId: Number(id) });
-    } else if (action === "restore-license") {
-      await call("restore-license", { licenseId: Number(id) });
-    } else if (action === "revoke-code") {
-      if (!confirm("Cancel this unused code? It will stop working.")) return;
-      await call("revoke-code", { codeId: Number(id) });
-    }
-    await load();
-    showNotice("notice", "Saved.", "done");
-  } catch (error) {
-    showNotice("notice", error.message);
-  }
+  });
+  setTimeout(() => $("#password")?.focus(), 50);
 }
 
-$("connect-form").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  connection.url = $("url").value.trim();
-  connection.password = $("password").value;
-  rememberUrl(connection.url);
-  showNotice("connect-notice", "");
-  try {
-    await load();
-  } catch (error) {
-    showNotice("connect-notice", error.message === "Failed to fetch"
-      ? "Couldn't reach the licence admin service. Check the function URL, and that license-admin is deployed."
-      : error.message);
-  }
-});
+/* ---------------- App ---------------- */
+function renderApp() {
+  if (!state.session) return;
+  const theme = currentTheme();
+  const themeIcon = theme === "dark" ? "moon" : theme === "light" ? "sun" : "monitor";
+  const data = state.data;
 
-$("generate-form").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  try {
-    const kind = $("kind").value;
-    const years = Number($("years").value);
-    const { code } = await call("generate-code", { kind, years, note: $("note").value.trim() });
-    const how = kind === "purchase"
-      ? "The owner enters it on the lock screen, or in Admin → Licence → Enter licence code."
-      : "The owner enters it in Admin → Licence → Enter licence code (or on the lock screen once it has ended).";
-    $("code-result").innerHTML = `<div class="muted">${kind === "purchase" ? "Purchase" : "Renewal"} code · ${years} year${years === 1 ? "" : "s"}</div>
-      <div class="mono">${esc(code.code)}</div>
-      <div class="muted" style="margin:6px 0 10px">${esc(how)}</div>
-      <button type="button" class="small" data-action="copy" data-id="${esc(code.code)}">Copy code</button>`;
-    $("code-result").classList.remove("hidden");
-    $("note").value = "";
-    await load();
-  } catch (error) {
-    showNotice("notice", error.message);
+  if (!$("#app-shell")) {
+    $("#root").innerHTML = `
+      <header class="top"><div class="bar" id="bar"></div></header>
+      <main id="app-shell"></main>`;
   }
-});
 
+  $("#bar").innerHTML = `
+    <div class="brand-mark small">S</div>
+    <div>
+      <div class="title">Swary Licences</div>
+      <div class="sub">Hotel Management</div>
+    </div>
+    <div class="spacer"></div>
+    <span class="synced">${state.syncedAt ? `Updated ${esc(ago(new Date(state.syncedAt).toISOString()))}` : ""}</span>
+    <button class="btn ghost icon-only" data-action="refresh" title="Refresh" aria-label="Refresh">${icon("refresh")}</button>
+    <button class="btn ghost icon-only" data-action="theme" title="Theme: ${theme === "system" ? "match this device" : theme}" aria-label="Change theme">${icon(themeIcon)}</button>
+    <button class="btn" data-action="sign-out">${icon("logout")}<span class="hide-sm">Sign out</span></button>`;
+
+  const main = $("#app-shell");
+  if (!data) {
+    main.innerHTML = `<div class="page-head"><h1>Overview</h1></div>
+      <div class="tiles">${Array.from({ length: 6 }, () => `<div class="tile"><div class="skeleton" style="width:60%"></div><div class="skeleton" style="width:40%;height:24px;margin-top:12px"></div></div>`).join("")}</div>
+      <div class="card" style="padding:20px;display:grid;gap:14px">${Array.from({ length: 6 }, () => '<div class="skeleton"></div>').join("")}</div>`;
+    return;
+  }
+
+  const statuses = data.devices.map(deviceStatus);
+  const count = (keys) => statuses.filter((s) => keys.includes(s.key)).length;
+  const year = new Date().getFullYear();
+  const sales = data.codes
+    .filter((code) => !code.revoked_at && code.amount && new Date(code.created_at).getFullYear() === year)
+    .reduce((sum, code) => sum + Number(code.amount), 0);
+
+  const tiles = [
+    { label: "Hotels", value: data.devices.length, hint: "computers using the app", icon: "home", tone: "violet", tab: "hotels", filter: "all" },
+    { label: "On free trial", value: count(["trial", "trial-ending"]), hint: "still in their free days", icon: "clock", tone: "info", tab: "hotels", filter: "trial" },
+    { label: "Trials ending", value: count(["trial-ending"]), hint: "in the next 7 days", icon: "alert", tone: "warning", tab: "hotels", filter: "trial-ending" },
+    { label: "Licensed", value: count(["licensed", "renewal"]), hint: "active subscriptions", icon: "check", tone: "success", tab: "hotels", filter: "licensed" },
+    { label: "Renewals due", value: count(["renewal"]), hint: "in the next 30 days", icon: "calendar", tone: "warning", tab: "hotels", filter: "renewal" },
+    { label: "Locked", value: count(["trial-ended", "expired"]), hint: "trial or subscription ended", icon: "lock", tone: "danger", tab: "hotels", filter: "locked" },
+    { label: `Sales ${year}`, value: rupees(sales), hint: "from codes with an amount", icon: "trend", tone: "success", tab: "codes", filter: "all" },
+  ];
+
+  const filters = state.tab === "hotels" ? HOTEL_FILTERS : state.tab === "licenses" ? LICENSE_FILTERS : CODE_FILTERS;
+  const tabCounts = { hotels: data.devices.length, licenses: data.licenses.length, codes: data.codes.length };
+
+  main.innerHTML = `
+    <div class="page-head">
+      <div>
+        <h1>Overview</h1>
+        <div class="muted">${esc(new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" }))}</div>
+      </div>
+      <button class="btn primary" data-action="new-code">${icon("plus")} New code</button>
+    </div>
+
+    <div class="tiles">
+      ${tiles.map((tile) => `
+        <button class="tile${state.tab === tile.tab && state.filter === tile.filter && tile.filter !== "all" ? " active" : ""}" data-action="tile" data-tab="${tile.tab}" data-filter="${tile.filter}">
+          <span class="top">${esc(tile.label)}<span class="glyph tone-${tile.tone}">${icon(tile.icon)}</span></span>
+          <b>${esc(tile.value)}</b>
+          <span class="hint">${esc(tile.hint)}</span>
+        </button>`).join("")}
+    </div>
+
+    <section class="card">
+      <div class="toolbar">
+        <div class="tabs" role="tablist">
+          ${[["hotels", "Hotels"], ["licenses", "Licences"], ["codes", "Codes"]].map(([key, label]) => `
+            <button class="tab" role="tab" aria-selected="${state.tab === key}" data-action="tab" data-tab="${key}">${label}<span class="count">${tabCounts[key]}</span></button>`).join("")}
+        </div>
+        <label class="field search">${icon("search")}<input id="search" type="search" placeholder="Search hotel, owner, email, phone, code…" value="${esc(state.query)}" aria-label="Search"></label>
+        <button class="btn" data-action="export">${icon("download")}<span class="hide-sm">Export CSV</span></button>
+      </div>
+      <div class="chips">
+        ${filters.map(([key, label]) => `<button class="chip" aria-pressed="${state.filter === key}" data-action="filter" data-filter="${key}">${esc(label)}<span class="n">${rowsFor(state.tab, key, false).length}</span></button>`).join("")}
+      </div>
+      <div class="table-wrap" id="table">${renderTable(rowsFor(state.tab))}</div>
+    </section>`;
+
+  $("#search").addEventListener("input", (event) => {
+    state.query = event.target.value;
+    $("#table").innerHTML = renderTable(rowsFor(state.tab));
+  });
+}
+
+function emptyState() {
+  const filtered = state.query || state.filter !== "all";
+  return `<div class="empty"><div class="glyph">${icon(filtered ? "search" : "home")}</div>
+    <b>${filtered ? "Nothing matches" : state.tab === "codes" ? "No codes yet" : "No hotels yet"}</b>
+    ${filtered ? "Try another search or filter." : state.tab === "codes" ? "Create one with New code." : "Computers appear here once the app checks in with the licence service."}</div>`;
+}
+
+function renderTable(rows) {
+  if (!rows.length) return emptyState();
+
+  if (state.tab === "hotels") {
+    return `<table>
+      <thead><tr><th>Hotel</th><th>Contact</th><th>Computer</th><th>Status</th><th>Plan ends</th><th>Version</th><th>Last seen</th></tr></thead>
+      <tbody>${rows.map((device) => {
+        const status = deviceStatus(device);
+        const license = licenseFor(device.device_hash);
+        return `<tr class="clickable" data-action="open" data-device="${esc(device.device_hash)}">
+          <td><div class="who">${avatar(hotelLabel(device), device.device_hash)}<div><b>${esc(hotelLabel(device))}</b><span class="sub">${esc(device.owner_name || "Not set up yet")}</span></div></div></td>
+          <td>${esc(device.owner_email || "—")}<span class="sub">${esc(device.owner_phone || "")}</span></td>
+          <td>${esc(device.device_name || "—")}<span class="sub mono">${shortId(device.device_hash)}</span></td>
+          <td><span class="pill tone-${status.tone}">${esc(status.label)}</span></td>
+          <td>${fmtDate(license ? license.expires_at : device.trial_ends_at)}<span class="sub">${license ? "subscription" : "free trial"}</span></td>
+          <td>${esc(device.app_version || "—")}</td>
+          <td title="${esc(fmtDateTime(device.last_seen_at))}">${esc(ago(device.last_seen_at))}</td>
+        </tr>`;
+      }).join("")}</tbody></table>`;
+  }
+
+  if (state.tab === "licenses") {
+    return `<table>
+      <thead><tr><th>Hotel</th><th>Licence code</th><th>Purchased</th><th>Period</th><th>Valid until</th><th>Status</th><th></th></tr></thead>
+      <tbody>${rows.map((license) => {
+        const device = deviceFor(license.device_hash);
+        const status = licenseStatus(license);
+        return `<tr class="${device ? "clickable" : ""}" ${device ? `data-action="open" data-device="${esc(device.device_hash)}"` : ""}>
+          <td><div class="who">${avatar(hotelLabel(device), license.device_hash)}<div><b>${esc(hotelLabel(device))}</b><span class="sub mono">${shortId(license.device_hash)}</span></div></div></td>
+          <td class="mono">${esc(license.code)}</td>
+          <td>${fmtDate(license.purchased_at)}</td>
+          <td>${plural(license.period_years, "year")}${license.last_renewed_at ? `<span class="sub">renewed ${fmtDate(license.last_renewed_at)}</span>` : ""}</td>
+          <td>${fmtDate(license.expires_at)}</td>
+          <td><span class="pill tone-${status.tone}">${esc(status.label)}</span></td>
+          <td class="actions">${license.revoked_at
+            ? `<button class="btn small" data-action="restore-license" data-id="${license.id}">Restore</button>`
+            : `<button class="btn small" data-action="extend-license" data-id="${license.id}">Extend</button>`}</td>
+        </tr>`;
+      }).join("")}</tbody></table>`;
+  }
+
+  return `<table>
+    <thead><tr><th>Code</th><th>Type</th><th>Amount</th><th>Hotel / note</th><th>Created</th><th>Status</th><th></th></tr></thead>
+    <tbody>${rows.map((code) => {
+      const device = codeDevice(code);
+      const status = codeStatus(code);
+      return `<tr>
+        <td class="mono">${esc(code.code)}</td>
+        <td>${code.kind === "purchase" ? "Purchase" : "Renewal"}<span class="sub">${plural(code.years, "year")}</span></td>
+        <td>${code.amount === null || code.amount === undefined ? "—" : rupees(code.amount)}</td>
+        <td>${device ? `<b>${esc(hotelLabel(device))}</b>` : ""}<span class="sub">${esc(code.note || (device ? "" : "—"))}</span></td>
+        <td>${fmtDate(code.created_at)}</td>
+        <td><span class="pill tone-${status.tone}">${esc(status.label)}</span></td>
+        <td class="actions">
+          <button class="btn small icon-only" data-action="copy" data-text="${esc(code.code)}" title="Copy code" aria-label="Copy code">${icon("copy")}</button>
+          ${status.key === "unused" ? `<button class="btn small" data-action="share-code" data-id="${code.id}">${icon("share")} Send</button>
+          <button class="btn small danger" data-action="revoke-code" data-id="${code.id}">Cancel</button>` : ""}
+        </td>
+      </tr>`;
+    }).join("")}</tbody></table>`;
+}
+
+/* ---------------- Hotel drawer ---------------- */
+function whatsappLink(phone, text) {
+  const digits = String(phone || "").replace(/\D/g, "");
+  if (digits.length < 10) return "";
+  const number = digits.length === 10 ? `91${digits}` : digits;
+  return `https://wa.me/${number}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
+}
+function mailLink(email, subject, body) {
+  if (!email) return "";
+  return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject || "")}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
+}
+
+function openDrawer(hash) {
+  state.drawer = hash;
+  renderDrawer();
+}
+function closeDrawer() {
+  state.drawer = null;
+  $("#drawer-layer")?.remove();
+}
+
+function renderDrawer() {
+  const device = deviceFor(state.drawer);
+  $("#drawer-layer")?.remove();
+  if (!device) return;
+  const status = deviceStatus(device);
+  const license = licenseFor(device.device_hash);
+  const trialLeft = daysUntil(device.trial_ends_at);
+  const codes = state.data.codes.filter((code) => codeDevice(code)?.device_hash === device.device_hash);
+  const pastLicenses = state.data.licenses.filter((item) => item.device_hash === device.device_hash && item.revoked_at);
+  const greeting = device.owner_name ? `Hello ${device.owner_name},` : "Hello,";
+
+  const layer = document.createElement("div");
+  layer.id = "drawer-layer";
+  layer.innerHTML = `
+    <div class="backdrop" data-action="close-drawer"></div>
+    <aside class="drawer" role="dialog" aria-label="${esc(hotelLabel(device))}">
+      <div class="drawer-head">
+        ${avatar(hotelLabel(device), device.device_hash)}
+        <div style="flex:1;min-width:0">
+          <h2>${esc(hotelLabel(device))}</h2>
+          <div class="muted" style="font-size:13px">${esc(device.owner_name || "Owner not set yet")}</div>
+          <div style="margin-top:8px"><span class="pill tone-${status.tone}">${esc(status.label)}</span></div>
+        </div>
+        <button class="btn ghost icon-only" data-action="close-drawer" aria-label="Close">${icon("close")}</button>
+      </div>
+      <div class="drawer-body">
+        <div class="contact">
+          <a class="btn" ${device.owner_phone ? `href="tel:${esc(device.owner_phone)}"` : 'aria-disabled="true"'}>${icon("phone")} Call</a>
+          <a class="btn" ${whatsappLink(device.owner_phone) ? `href="${esc(whatsappLink(device.owner_phone, `${greeting}\n\n`))}" target="_blank" rel="noopener"` : 'aria-disabled="true"'}>${icon("chat")} WhatsApp</a>
+          <a class="btn" ${device.owner_email ? `href="${esc(mailLink(device.owner_email, "Swary Hotel Management"))}"` : 'aria-disabled="true"'}>${icon("mail")} Email</a>
+        </div>
+
+        <div class="section">
+          <h3>Owner</h3>
+          <dl class="kv">
+            <dt>Hotel</dt><dd>${esc(device.hotel_name || "—")}</dd>
+            <dt>Owner</dt><dd>${esc(device.owner_name || "—")}</dd>
+            <dt>Email</dt><dd>${esc(device.owner_email || "—")}</dd>
+            <dt>Phone</dt><dd>${esc(device.owner_phone || "—")}</dd>
+          </dl>
+        </div>
+
+        <div class="section">
+          <h3>Licence ${license ? `<span class="pill tone-${licenseStatus(license).tone}">${esc(licenseStatus(license).label)}</span>` : ""}</h3>
+          ${license ? `
+            <dl class="kv">
+              <dt>Code</dt><dd><span class="mono">${esc(license.code)}</span> <button class="btn ghost small icon-only" data-action="copy" data-text="${esc(license.code)}" aria-label="Copy licence code">${icon("copy")}</button></dd>
+              <dt>Purchased</dt><dd>${fmtDate(license.purchased_at)}</dd>
+              <dt>Period</dt><dd>${plural(license.period_years, "year")}</dd>
+              <dt>Last renewed</dt><dd>${fmtDate(license.last_renewed_at)}</dd>
+              <dt>Valid until</dt><dd><b>${fmtDate(license.expires_at)}</b> <span class="muted">· ${daysUntil(license.expires_at) > 0 ? `${plural(daysUntil(license.expires_at), "day")} left` : "ended"}</span></dd>
+            </dl>
+            <div class="actions-row">
+              <button class="btn primary small" data-action="new-code" data-kind="renewal" data-device="${esc(device.device_hash)}">${icon("key")} Renewal code</button>
+              <button class="btn small" data-action="extend-license" data-id="${license.id}">Extend</button>
+              <button class="btn small" data-action="set-license-end" data-id="${license.id}">Set end date</button>
+              <button class="btn small danger" data-action="revoke-license" data-id="${license.id}">Cancel licence</button>
+            </div>` : `
+            <p class="muted" style="margin:0">No licence yet${pastLicenses.length ? ` (${plural(pastLicenses.length, "cancelled licence")})` : ""}.</p>
+            <div class="actions-row">
+              <button class="btn primary small" data-action="new-code" data-kind="purchase" data-device="${esc(device.device_hash)}">${icon("key")} Purchase code</button>
+              ${pastLicenses.map((item) => `<button class="btn small" data-action="restore-license" data-id="${item.id}">Restore …${esc(item.code.slice(-4))}</button>`).join("")}
+            </div>`}
+        </div>
+
+        <div class="section">
+          <h3>Free trial</h3>
+          <dl class="kv">
+            <dt>Started</dt><dd>${fmtDate(device.trial_started_at)}</dd>
+            <dt>Ends</dt><dd><b>${fmtDate(device.trial_ends_at)}</b> <span class="muted">· ${trialLeft > 0 ? `${plural(trialLeft, "day")} left` : "ended"}</span></dd>
+          </dl>
+          <div class="actions-row">
+            <button class="btn small" data-action="extend-trial" data-device="${esc(device.device_hash)}">Extend trial</button>
+            <button class="btn small" data-action="set-trial-end" data-device="${esc(device.device_hash)}">Set end date</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Computer</h3>
+          <dl class="kv">
+            <dt>Name</dt><dd>${esc(device.device_name || "—")}</dd>
+            <dt>Computer ID</dt><dd class="mono">${shortId(device.device_hash)}</dd>
+            <dt>App version</dt><dd>${esc(device.app_version || "—")}</dd>
+            <dt>First seen</dt><dd>${fmtDateTime(device.first_seen_at)}</dd>
+            <dt>Last seen</dt><dd>${fmtDateTime(device.last_seen_at)} <span class="muted">· ${esc(ago(device.last_seen_at))}</span></dd>
+          </dl>
+        </div>
+
+        <div class="section">
+          <h3>Codes</h3>
+          ${codes.length ? `<div class="code-list">${codes.map((code) => {
+            const s = codeStatus(code);
+            return `<div class="code-item">
+              <div class="grow"><div class="mono">${esc(code.code)}</div><div class="muted" style="font-size:12px">${code.kind === "purchase" ? "Purchase" : "Renewal"} · ${plural(code.years, "year")}${code.amount ? ` · ${rupees(code.amount)}` : ""} · ${fmtDate(code.created_at)}</div></div>
+              <span class="pill tone-${s.tone}">${esc(s.label)}</span>
+              ${s.key === "unused" ? `<button class="btn small icon-only" data-action="share-code" data-id="${code.id}" title="Send" aria-label="Send code">${icon("share")}</button>` : ""}
+            </div>`;
+          }).join("")}</div>` : '<p class="muted" style="margin:0">No codes issued for this hotel yet.</p>'}
+        </div>
+      </div>
+    </aside>`;
+  document.body.append(layer);
+}
+
+/* ---------------- Modals ---------------- */
+function closeModal() {
+  $("#modal-layer")?.remove();
+}
+
+function openModal({ title, text = "", body, foot, wide = false, onMount }) {
+  closeModal();
+  const layer = document.createElement("div");
+  layer.id = "modal-layer";
+  layer.className = "modal-wrap";
+  layer.innerHTML = `
+    <div class="backdrop" data-action="close-modal"></div>
+    <form class="modal${wide ? " wide" : ""}" role="dialog" aria-label="${esc(title)}" novalidate>
+      <div class="modal-head"><h2>${esc(title)}</h2>${text ? `<p>${esc(text)}</p>` : ""}</div>
+      <div class="modal-body">${body}</div>
+      <div class="modal-foot">${foot}</div>
+    </form>`;
+  document.body.append(layer);
+  onMount?.($("form", layer));
+  setTimeout(() => $("input:not([type=hidden]), select, textarea", layer)?.focus(), 40);
+}
+
+/** A small form; `submit` gets the form and resolves once saved. */
+function formModal({ title, text, fields, submitLabel = "Save", danger = false, submit }) {
+  openModal({
+    title,
+    text,
+    body: `${fields}<div class="modal-error"></div>`,
+    foot: `<button type="button" class="btn" data-action="close-modal">Back</button>
+           <button type="submit" class="btn ${danger ? "danger" : "primary"}">${esc(submitLabel)}</button>`,
+    onMount(form) {
+      form.addEventListener("click", (event) => {
+        const quick = event.target.closest("[data-quick]");
+        if (!quick) return;
+        $(`[name="${quick.dataset.target}"]`, form).value = quick.dataset.quick;
+      });
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const button = $("button[type=submit]", form);
+        button.disabled = true;
+        $(".modal-error", form).innerHTML = "";
+        try {
+          await submit(form);
+          closeModal();
+        } catch (error) {
+          $(".modal-error", form).innerHTML = `<div class="error-note">${esc(error.message)}</div>`;
+          button.disabled = false;
+        }
+      });
+    },
+  });
+}
+
+function numberField(name, label, value, quick = [], { min = 0, max = 3650, suffix = "" } = {}) {
+  return `<div><label class="label" for="${name}">${esc(label)}</label>
+    <div class="field"><input id="${name}" name="${name}" type="number" inputmode="numeric" min="${min}" max="${max}" value="${esc(value)}">${suffix ? `<span class="prefix">${esc(suffix)}</span>` : ""}</div>
+    ${quick.length ? `<div class="quick">${quick.map((q) => `<button type="button" class="chip" data-quick="${q}" data-target="${name}">${q}</button>`).join("")}</div>` : ""}</div>`;
+}
+function dateField(name, label, value) {
+  return `<div><label class="label" for="${name}">${esc(label)}</label><div class="field">${icon("calendar")}<input id="${name}" name="${name}" type="date" required value="${esc(value)}"></div></div>`;
+}
+
+async function saved(promise, message) {
+  await promise;
+  toast(message);
+  await refresh({ quiet: true });
+}
+
+function extendTrial(hash) {
+  const device = deviceFor(hash);
+  formModal({
+    title: "Extend free trial",
+    text: `${hotelLabel(device)} · ends ${fmtDate(device.trial_ends_at)}. Days are added to that date, or to today if it has passed.`,
+    fields: numberField("days", "Days to add", 7, [7, 15, 30, 60], { min: 1, suffix: "days" }),
+    submitLabel: "Extend trial",
+    submit: (form) => saved(api("extend-trial", { deviceHash: hash, days: Number(form.days.value) }), "Trial extended"),
+  });
+}
+
+function setTrialEnd(hash) {
+  const device = deviceFor(hash);
+  formModal({
+    title: "Set trial end date",
+    text: `${hotelLabel(device)}. The trial ends at the end of this day (India time). An earlier date ends it sooner.`,
+    fields: dateField("date", "Trial ends on", todayInput(device.trial_ends_at)),
+    submit: (form) => saved(api("set-trial-end", { deviceHash: hash, date: form.date.value }), "Trial end date saved"),
+  });
+}
+
+function extendLicense(id) {
+  const license = state.data.licenses.find((item) => item.id === Number(id));
+  formModal({
+    title: "Extend subscription",
+    text: `${hotelLabel(deviceFor(license.device_hash))} · ends ${fmtDate(license.expires_at)}. Added to that date, or to today if it has ended. For a paid renewal, a renewal code also records the payment.`,
+    fields: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">${numberField("years", "Years", 1, [1, 3, 5], { max: 10 })}${numberField("days", "Days", 0, [7, 30])}</div>`,
+    submitLabel: "Extend",
+    submit: (form) => saved(api("extend-license", { licenseId: license.id, years: Number(form.years.value || 0), days: Number(form.days.value || 0) }), "Subscription extended"),
+  });
+}
+
+function setLicenseEnd(id) {
+  const license = state.data.licenses.find((item) => item.id === Number(id));
+  formModal({
+    title: "Set subscription end date",
+    text: `${hotelLabel(deviceFor(license.device_hash))}. The subscription ends at the end of this day (India time).`,
+    fields: dateField("date", "Ends on", todayInput(license.expires_at)),
+    submit: (form) => saved(api("set-license-end", { licenseId: license.id, date: form.date.value }), "End date saved"),
+  });
+}
+
+function confirmAction({ title, text, confirmLabel, run }) {
+  formModal({ title, text, fields: "", submitLabel: confirmLabel, danger: true, submit: run });
+}
+
+/* ---------------- New code ---------------- */
+function codeMessage(code, device) {
+  const hello = device?.owner_name ? `Hello ${device.owner_name},` : "Hello,";
+  const period = plural(code.years, "year");
+  return code.kind === "purchase"
+    ? `${hello}\n\nThank you for choosing Swary Hotel Management.\n\nYour licence code: ${code.code}\nValid for ${period} from activation.\n\nTo activate it, enter the code on the app's lock screen, or open Admin → Licence → Enter licence code.\n\nSwary Soft · ${SUPPORT}`
+    : `${hello}\n\nThank you for renewing Swary Hotel Management.\n\nYour renewal code: ${code.code}\nIt adds ${period} to your subscription.\n\nIn the app, open Admin → Licence → Enter licence code (or enter it on the lock screen).\n\nSwary Soft · ${SUPPORT}`;
+}
+
+function newCode({ kind = "purchase", device: presetDevice = "" } = {}) {
+  const hotels = [...state.data.devices].sort((a, b) => hotelLabel(a).localeCompare(hotelLabel(b)));
+  openModal({
+    title: "New code",
+    text: "Issue a code after payment. A purchase code starts a licence; a renewal code extends one.",
+    wide: true,
+    body: `
+      <div><span class="label">Type</span>
+        <div class="segmented" id="kind">
+          <button type="button" aria-pressed="${kind === "purchase"}" data-kind="purchase">Purchase</button>
+          <button type="button" aria-pressed="${kind === "renewal"}" data-kind="renewal">Renewal</button>
+        </div></div>
+      <div><span class="label">Period</span>
+        <div class="segmented" id="years">
+          ${[1, 3, 5].map((y) => `<button type="button" aria-pressed="${y === 1}" data-years="${y}">${plural(y, "year")}</button>`).join("")}
+          <button type="button" aria-pressed="false" data-years="other">Other</button>
+        </div>
+        <div class="field hidden" id="years-other" style="margin-top:8px"><input type="number" name="yearsOther" min="1" max="10" value="2" aria-label="Years"><span class="prefix">years (1–10)</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:12px">
+        <div><label class="label" for="amount">Amount received</label><div class="field"><span class="prefix">₹</span><input id="amount" name="amount" type="number" min="0" step="1" placeholder="Optional"></div></div>
+        <div><label class="label" for="hotel">For hotel</label><div class="field"><select id="hotel" name="hotel">
+          <option value="">Not linked yet</option>
+          ${hotels.map((device) => `<option value="${esc(device.device_hash)}"${device.device_hash === presetDevice ? " selected" : ""}>${esc(hotelLabel(device))} · ${shortId(device.device_hash)}</option>`).join("")}
+        </select></div></div>
+      </div>
+      <div><label class="label" for="note">Note</label><div class="field"><input id="note" name="note" maxlength="200" placeholder="e.g. paid by UPI on 3 Oct, ref 4521"></div></div>
+      <div class="modal-error"></div>`,
+    foot: `<button type="button" class="btn" data-action="close-modal">Cancel</button>
+           <button type="submit" class="btn primary">${icon("key")} Create code</button>`,
+    onMount(form) {
+      let selectedKind = kind;
+      let years = "1";
+      form.addEventListener("click", (event) => {
+        const kindButton = event.target.closest("[data-kind]");
+        if (kindButton) {
+          selectedKind = kindButton.dataset.kind;
+          form.querySelectorAll("#kind button").forEach((b) => b.setAttribute("aria-pressed", String(b === kindButton)));
+        }
+        const yearsButton = event.target.closest("[data-years]");
+        if (yearsButton) {
+          form.querySelectorAll("#years button").forEach((b) => b.setAttribute("aria-pressed", String(b === yearsButton)));
+          years = yearsButton.dataset.years;
+          $("#years-other", form).classList.toggle("hidden", years !== "other");
+        }
+      });
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const button = $("button[type=submit]", form);
+        button.disabled = true;
+        $(".modal-error", form).innerHTML = "";
+        try {
+          const { code } = await api("generate-code", {
+            kind: selectedKind,
+            years: years === "other" ? Number(form.yearsOther.value) : Number(years),
+            amount: form.amount.value === "" ? null : Number(form.amount.value),
+            note: form.note.value.trim(),
+            deviceHash: form.hotel.value || undefined,
+          });
+          await refresh({ quiet: true });
+          showCode(code);
+        } catch (error) {
+          $(".modal-error", form).innerHTML = `<div class="error-note">${esc(error.message)}</div>`;
+          button.disabled = false;
+        }
+      });
+    },
+  });
+}
+
+function showCode(code) {
+  const device = codeDevice(code);
+  const message = codeMessage(code, device);
+  const subject = code.kind === "purchase" ? "Your Swary Hotel Management licence code" : "Your Swary Hotel Management renewal code";
+  const wa = device && whatsappLink(device.owner_phone, message);
+  const mail = device && mailLink(device.owner_email, subject, message);
+  openModal({
+    title: code.kind === "purchase" ? "Licence code ready" : "Renewal code ready",
+    text: device ? `For ${hotelLabel(device)}.` : "Send it to the hotel owner.",
+    wide: true,
+    body: `
+      <div class="code-hero">
+        <span class="muted" style="font-size:12px;font-weight:600">${code.kind === "purchase" ? "PURCHASE" : "RENEWAL"} · ${plural(code.years, "year").toUpperCase()}${code.amount ? ` · ${rupees(code.amount)}` : ""}</span>
+        <span class="mono">${esc(code.code)}</span>
+      </div>
+      <div><span class="label">Message for the owner</span><textarea class="field" rows="9" readonly id="message">${esc(message)}</textarea></div>
+      <div class="share">
+        <button type="button" class="btn" data-action="copy" data-text="${esc(code.code)}">${icon("copy")} Copy code</button>
+        <button type="button" class="btn" data-action="copy-message">${icon("copy")} Copy message</button>
+        <a class="btn" ${wa ? `href="${esc(wa)}" target="_blank" rel="noopener"` : 'aria-disabled="true" title="No phone number for this hotel"'}>${icon("chat")} WhatsApp</a>
+        <a class="btn" ${mail ? `href="${esc(mail)}"` : 'aria-disabled="true" title="No email for this hotel"'}>${icon("mail")} Email</a>
+      </div>`,
+    foot: `<button type="button" class="btn primary" data-action="close-modal">Done</button>`,
+  });
+}
+
+/* ---------------- CSV ---------------- */
+function exportCsv() {
+  const rows = rowsFor(state.tab);
+  const quote = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+  let head;
+  let lines;
+  if (state.tab === "hotels") {
+    head = ["Hotel", "Owner", "Email", "Phone", "Computer", "Computer ID", "Status", "Trial ends", "Licence code", "Valid until", "Version", "Last seen"];
+    lines = rows.map((d) => {
+      const license = licenseFor(d.device_hash);
+      return [d.hotel_name, d.owner_name, d.owner_email, d.owner_phone, d.device_name, shortId(d.device_hash), deviceStatus(d).label, fmtDate(d.trial_ends_at), license?.code, license && fmtDate(license.expires_at), d.app_version, fmtDateTime(d.last_seen_at)];
+    });
+  } else if (state.tab === "licenses") {
+    head = ["Hotel", "Computer ID", "Licence code", "Purchased", "Period (years)", "Last renewed", "Valid until", "Status"];
+    lines = rows.map((l) => [hotelLabel(deviceFor(l.device_hash)), shortId(l.device_hash), l.code, fmtDate(l.purchased_at), l.period_years, fmtDate(l.last_renewed_at), fmtDate(l.expires_at), licenseStatus(l).label]);
+  } else {
+    head = ["Code", "Type", "Years", "Amount (INR)", "Hotel", "Note", "Created", "Status"];
+    lines = rows.map((c) => [c.code, c.kind, c.years, c.amount ?? "", codeDevice(c) ? hotelLabel(codeDevice(c)) : "", c.note, fmtDate(c.created_at), codeStatus(c).label]);
+  }
+  const csv = [head, ...lines].map((line) => line.map(quote).join(",")).join("\r\n");
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
+  link.download = `swary-${state.tab}-${todayInput()}.csv`;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  toast(`Exported ${plural(lines.length, "row")}`);
+}
+
+/* ---------------- Events ---------------- */
 document.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-action]");
-  if (button) void act(button.dataset.action, button.dataset.id);
-  const tabButton = event.target.closest("button[data-tab]");
-  if (tabButton) { tab = tabButton.dataset.tab; render(); }
+  const target = event.target.closest("[data-action]");
+  if (!target || target.getAttribute("aria-disabled") === "true") return;
+  const { action, id, device, tab, filter, text, kind } = target.dataset;
+
+  switch (action) {
+    case "refresh": return void refresh().then(() => state.session && toast("Up to date"));
+    case "theme": return cycleTheme();
+    case "sign-out": return signOut("You have signed out.");
+    case "tab": state.tab = tab; state.filter = "all"; return renderApp();
+    case "filter": state.filter = filter; return renderApp();
+    case "tile": state.tab = tab; state.filter = filter; return renderApp();
+    case "export": return exportCsv();
+    case "open": return openDrawer(device);
+    case "close-drawer": return closeDrawer();
+    case "close-modal": return closeModal();
+    case "copy": return void copyText(text, "Code copied");
+    case "copy-message": return void copyText($("#message").value, "Message copied");
+    case "new-code": return newCode({ kind: kind || "purchase", device: device || "" });
+    case "share-code": return showCode(state.data.codes.find((code) => code.id === Number(id)));
+    case "extend-trial": return extendTrial(device);
+    case "set-trial-end": return setTrialEnd(device);
+    case "extend-license": return extendLicense(id);
+    case "set-license-end": return setLicenseEnd(id);
+    case "revoke-license": return confirmAction({
+      title: "Cancel this licence?",
+      text: "The computer using it locks at its next check (within a few hours, or when it next goes online). You can restore it later.",
+      confirmLabel: "Cancel licence",
+      run: () => saved(api("revoke-license", { licenseId: Number(id) }), "Licence cancelled"),
+    });
+    case "restore-license": return void saved(api("restore-license", { licenseId: Number(id) }), "Licence restored").catch((error) => toast(error.message, "error"));
+    case "revoke-code": return confirmAction({
+      title: "Cancel this code?",
+      text: "It stops working at once. Only unused codes can be cancelled.",
+      confirmLabel: "Cancel code",
+      run: () => saved(api("revoke-code", { codeId: Number(id) }), "Code cancelled"),
+    });
+  }
 });
 
-$("search").addEventListener("input", render);
-$("refresh").addEventListener("click", () => load().catch((error) => showNotice("notice", error.message)));
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  if ($("#modal-layer")) closeModal();
+  else if (state.drawer) closeDrawer();
+});
 
-$("url").value = rememberedUrl() || $("url").value;
+// Sign out after 30 minutes without activity, or when the session ends.
+for (const type of ["pointerdown", "keydown", "wheel", "touchstart"]) {
+  window.addEventListener(type, () => { state.lastActivity = Date.now(); }, { passive: true });
+}
+setInterval(() => {
+  if (!state.session) return;
+  if (Date.now() - state.lastActivity > IDLE_LIMIT_MS) signOut("Signed out after 30 minutes without activity.");
+  else if (Date.parse(state.session.expiresAt) <= Date.now()) signOut("Your session has ended. Sign in again.");
+  else if (state.syncedAt && $("#bar .synced")) $("#bar .synced").textContent = `Updated ${ago(new Date(state.syncedAt).toISOString())}`;
+}, 30000);
+
+// Fresh numbers when coming back to the page.
+window.addEventListener("focus", () => {
+  if (state.session && Date.now() - state.syncedAt > 2 * 60000 && !$("#modal-layer")) void refresh({ quiet: true });
+});
+
+/* ---------------- Start ---------------- */
+state.url = storage.get("localStorage", "swary-admin-url") || DEFAULT_URL;
+state.session = savedSession();
+if (state.session) void refresh();
+else renderSignIn();
 </script>
 </body>
 </html>
