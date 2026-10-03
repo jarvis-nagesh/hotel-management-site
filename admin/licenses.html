@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Swary Licences</title>
+<!--
+  Swary Soft licence admin, hosted at https://swary.in/admin/licenses.html
+  from the hotel-management-site repository (copy this file there after
+  changing it). It also works opened straight from disk. Sign in with the admin password you set in the Supabase dashboard
+  (Edge Functions → Secrets → SWARY_ADMIN_PASSWORD). The password is never
+  saved here. Nothing in this file ships with the app.
+-->
+<style>
+  :root {
+    --canvas: #f5f5f7; --surface: #ffffff; --surface-2: #fafafc; --ink: #1d1d1f; --muted: #6e6e73;
+    --line: #e5e5ea; --accent: #0071e3; --accent-soft: #e8f1fc; --success: #248a3d; --success-soft: #eaf7ee;
+    --warning: #b25000; --warning-soft: #fff4e5; --danger: #c9302c; --danger-soft: #fdecec;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --canvas: #000000; --surface: #1c1c1e; --surface-2: #232325; --ink: #f5f5f7; --muted: #98989d;
+      --line: #2c2c2e; --accent: #2997ff; --accent-soft: #10263d; --success: #30d158; --success-soft: #0f2a17;
+      --warning: #ffb35c; --warning-soft: #33240f; --danger: #ff6961; --danger-soft: #3a1513;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--canvas); color: var(--ink); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 28px 16px 60px; }
+  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+  h1 { margin: 0; font-size: 24px; letter-spacing: -0.3px; }
+  h2 { margin: 0 0 4px; font-size: 16px; }
+  .muted { color: var(--muted); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin-bottom: 16px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+  label { display: grid; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  input, select { font: inherit; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; min-width: 0; }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  button { font: inherit; font-weight: 600; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; padding: 9px 14px; cursor: pointer; }
+  button:hover { background: var(--surface-2); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.danger { color: var(--danger); }
+  button.small { padding: 5px 9px; font-size: 12px; }
+  button:disabled { opacity: 0.5; cursor: default; }
+  .grow { flex: 1 1 260px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+  .tile b { display: block; font-size: 24px; letter-spacing: -0.4px; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tabs button[aria-selected="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.actions { white-space: nowrap; text-align: right; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .pill { display: inline-block; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .ok { background: var(--success-soft); color: var(--success); }
+  .warn { background: var(--warning-soft); color: var(--warning); }
+  .bad { background: var(--danger-soft); color: var(--danger); }
+  .info { background: var(--accent-soft); color: var(--accent); }
+  .plain { background: var(--surface-2); color: var(--muted); }
+  .notice { border-radius: 12px; padding: 10px 12px; margin-top: 12px; font-size: 13px; }
+  .notice.error { background: var(--danger-soft); color: var(--danger); }
+  .notice.done { background: var(--success-soft); color: var(--success); }
+  .code-result { margin-top: 14px; padding: 14px; border-radius: 14px; background: var(--accent-soft); }
+  .code-result .mono { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; }
+  .hidden { display: none !important; }
+  dialog { border: 1px solid var(--line); border-radius: 18px; padding: 0; background: var(--surface); color: var(--ink); width: min(420px, calc(100vw - 32px)); }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.35); }
+  dialog form { padding: 20px; display: grid; gap: 12px; }
+  dialog .buttons { display: flex; gap: 8px; justify-content: flex-end; }
+  .empty { padding: 24px; text-align: center; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Swary Licences</h1>
+      <div class="muted">Hotel Management · trials, licences and codes</div>
+    </div>
+    <button id="refresh" class="hidden">Refresh</button>
+  </header>
+
+  <section class="card" id="connect">
+    <h2>Sign in</h2>
+    <p class="muted" style="margin:0 0 12px">Use the admin password you set in Supabase → Edge Functions → Secrets → <span class="mono">SWARY_ADMIN_PASSWORD</span>. Forgot it? Set a new one there.</p>
+    <form class="row" id="connect-form">
+      <label class="grow">Function URL
+        <input id="url" required value="https://zwgvbqgseobzfniroieh.supabase.co/functions/v1/license-admin">
+      </label>
+      <label class="grow">Admin password
+        <input id="password" type="password" required autocomplete="current-password">
+      </label>
+      <button class="primary" type="submit">Sign in</button>
+    </form>
+    <div id="connect-notice"></div>
+  </section>
+
+  <div id="app" class="hidden">
+    <div class="tiles" id="tiles"></div>
+
+    <section class="card">
+      <h2>Generate a code</h2>
+      <p class="muted" style="margin:0 0 12px">A purchase code activates a licence (and moves it if the owner changes computer). A renewal code extends an existing licence.</p>
+      <form class="row" id="generate-form">
+        <label>Kind
+          <select id="kind">
+            <option value="purchase">Purchase (new licence)</option>
+            <option value="renewal">Renewal</option>
+          </select>
+        </label>
+        <label>Period
+          <select id="years">
+            <option value="1">1 year</option>
+            <option value="3">3 years</option>
+            <option value="5">5 years</option>
+            <option value="2">2 years</option>
+            <option value="4">4 years</option>
+            <option value="10">10 years</option>
+          </select>
+        </label>
+        <label class="grow">Note (who it's for)
+          <input id="note" maxlength="200" placeholder="e.g. Hotel Rohini, paid ₹… on 3 Oct">
+        </label>
+        <button class="primary" type="submit">Generate</button>
+      </form>
+      <div id="code-result" class="code-result hidden"></div>
+    </section>
+
+    <section class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:12px">
+        <div class="tabs" role="tablist">
+          <button role="tab" data-tab="devices" aria-selected="true">Computers</button>
+          <button role="tab" data-tab="licenses" aria-selected="false">Licences</button>
+          <button role="tab" data-tab="codes" aria-selected="false">Codes</button>
+        </div>
+        <input id="search" type="search" placeholder="Search hotel, email, computer, code…" style="flex:0 1 320px">
+      </div>
+      <div id="notice"></div>
+      <div class="table-wrap" id="table"></div>
+    </section>
+  </div>
+</div>
+
+<dialog id="dialog">
+  <form method="dialog" id="dialog-form">
+    <h2 id="dialog-title"></h2>
+    <p class="muted" id="dialog-text" style="margin:0"></p>
+    <div id="dialog-fields" style="display:grid;gap:10px"></div>
+    <div class="buttons">
+      <button value="cancel" formnovalidate>Cancel</button>
+      <button value="ok" class="primary" id="dialog-ok">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+"use strict";
+
+const DAY = 86400000;
+const $ = (id) => document.getElementById(id);
+let data = null;
+let tab = "devices";
+
+// The password stays in memory only. The function URL is remembered when
+// the browser allows it (some block storage for pages opened from a file).
+const connection = { url: "", password: "" };
+const rememberedUrl = () => { try { return localStorage.getItem("swary-admin-url") || ""; } catch { return ""; } };
+const rememberUrl = (url) => { try { localStorage.setItem("swary-admin-url", url); } catch { /* storage unavailable */ } };
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+const shortId = (hash) => hash ? `${hash.slice(0, 4)}-${hash.slice(4, 8)}`.toUpperCase() : "—";
+const date = (value) => value ? new Date(value).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) : "—";
+const dateTime = (value) => value ? new Date(value).toLocaleString(undefined, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) : "—";
+const daysLeft = (value) => Math.ceil((Date.parse(value) - Date.now()) / DAY);
+
+function endPill(value) {
+  const days = daysLeft(value);
+  const cls = days <= 0 ? "bad" : days <= 7 ? "warn" : "ok";
+  const text = days <= 0 ? `ended ${date(value)}` : `${date(value)} · ${days}d`;
+  return `<span class="pill ${cls}">${esc(text)}</span>`;
+}
+
+function showNotice(target, text, kind = "error") {
+  $(target).innerHTML = text ? `<div class="notice ${kind}">${esc(text)}</div>` : "";
+}
+
+async function call(action, body = {}) {
+  const response = await fetch(connection.url, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-swary-admin-password": connection.password },
+    body: JSON.stringify({ action, ...body }),
+  });
+  const result = await response.json().catch(() => ({ error: true, message: `HTTP ${response.status}` }));
+  if (!response.ok || result.error) throw new Error(result.message || `HTTP ${response.status}`);
+  return result;
+}
+
+async function load() {
+  data = await call("overview");
+  $("connect").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  $("refresh").classList.remove("hidden");
+  render();
+}
+
+function licenseForDevice(hash) {
+  return data.licenses.find((license) => license.device_hash === hash && !license.revoked_at);
+}
+
+function deviceFor(license) {
+  return data.devices.find((device) => device.device_hash === license.device_hash);
+}
+
+function renderTiles() {
+  const now = Date.now();
+  const licensed = new Set(data.licenses.filter((l) => !l.revoked_at && l.device_hash).map((l) => l.device_hash));
+  const trials = data.devices.filter((d) => !licensed.has(d.device_hash) && Date.parse(d.trial_ends_at) > now);
+  const tiles = [
+    ["Computers", data.devices.length],
+    ["On free trial", trials.length],
+    ["Trials ending in 7 days", trials.filter((d) => Date.parse(d.trial_ends_at) - now <= 7 * DAY).length],
+    ["Active licences", data.licenses.filter((l) => !l.revoked_at && Date.parse(l.expires_at) > now).length],
+    ["Licences ending in 30 days", data.licenses.filter((l) => !l.revoked_at && Date.parse(l.expires_at) > now && Date.parse(l.expires_at) - now <= 30 * DAY).length],
+    ["Unused codes", data.codes.filter((c) => !c.used_at && !c.revoked_at).length],
+  ];
+  $("tiles").innerHTML = tiles.map(([label, value]) => `<div class="tile"><span class="muted">${esc(label)}</span><b>${value}</b></div>`).join("");
+}
+
+function matches(...values) {
+  const query = $("search").value.trim().toLowerCase();
+  return !query || values.some((value) => String(value ?? "").toLowerCase().includes(query));
+}
+
+function renderDevices() {
+  const rows = data.devices
+    .filter((d) => matches(d.hotel_name, d.owner_name, d.owner_email, d.owner_phone, d.device_name, shortId(d.device_hash)))
+    .map((d) => {
+      const license = licenseForDevice(d.device_hash);
+      return `<tr>
+        <td><b>${esc(d.hotel_name || "Not set up yet")}</b><div class="muted">${esc(d.owner_name || "")}</div></td>
+        <td>${esc(d.owner_email || "—")}<div class="muted">${esc(d.owner_phone || "")}</div></td>
+        <td>${esc(d.device_name || "—")}<div class="muted mono">${shortId(d.device_hash)}</div></td>
+        <td>${esc(d.app_version || "—")}</td>
+        <td>${license ? '<span class="pill plain">Licensed</span>' : endPill(d.trial_ends_at)}<div class="muted">since ${date(d.trial_started_at)}</div></td>
+        <td>${license ? `${endPill(license.expires_at)}<div class="muted mono">${esc(license.code)}</div>` : "—"}</td>
+        <td>${dateTime(d.last_seen_at)}</td>
+        <td class="actions"><button class="small" data-action="extend-trial" data-id="${esc(d.device_hash)}">Extend trial</button></td>
+      </tr>`;
+    });
+  return table(["Hotel", "Owner", "Computer", "Version", "Free trial", "Licence", "Last seen", ""], rows);
+}
+
+function renderLicenses() {
+  const rows = data.licenses
+    .filter((l) => { const d = deviceFor(l) || {}; return matches(l.code, d.hotel_name, d.owner_email, d.device_name, shortId(l.device_hash)); })
+    .map((l) => {
+      const d = deviceFor(l) || {};
+      const status = l.revoked_at ? '<span class="pill bad">Cancelled</span>' : endPill(l.expires_at);
+      return `<tr>
+        <td class="mono">${esc(l.code)}</td>
+        <td><b>${esc(d.hotel_name || "—")}</b><div class="muted">${esc(d.owner_email || "")}</div></td>
+        <td>${esc(d.device_name || "—")}<div class="muted mono">${shortId(l.device_hash)}</div></td>
+        <td>${date(l.purchased_at)}</td>
+        <td>${l.period_years} yr${l.last_renewed_at ? `<div class="muted">renewed ${date(l.last_renewed_at)}</div>` : ""}</td>
+        <td>${status}</td>
+        <td class="actions">
+          ${l.revoked_at
+            ? `<button class="small" data-action="restore-license" data-id="${l.id}">Restore</button>`
+            : `<button class="small" data-action="extend-license" data-id="${l.id}">Extend</button>
+               <button class="small" data-action="set-license-end" data-id="${l.id}">Set end date</button>
+               <button class="small danger" data-action="revoke-license" data-id="${l.id}">Cancel</button>`}
+        </td>
+      </tr>`;
+    });
+  return table(["Code", "Hotel", "Computer", "Purchased", "Period", "Valid until", ""], rows);
+}
+
+function renderCodes() {
+  const rows = data.codes
+    .filter((c) => matches(c.code, c.note, c.kind))
+    .map((c) => {
+      const license = c.license_id && data.licenses.find((l) => l.id === c.license_id);
+      const hotel = license && (deviceFor(license) || {}).hotel_name;
+      const status = c.revoked_at ? '<span class="pill bad">Cancelled</span>'
+        : c.used_at ? `<span class="pill plain">Used ${date(c.used_at)}</span>`
+        : '<span class="pill info">Unused</span>';
+      return `<tr>
+        <td class="mono">${esc(c.code)}</td>
+        <td>${c.kind === "purchase" ? "Purchase" : "Renewal"}</td>
+        <td>${c.years} yr</td>
+        <td>${esc(c.note || "—")}</td>
+        <td>${date(c.created_at)}</td>
+        <td>${status}${hotel ? `<div class="muted">${esc(hotel)}</div>` : ""}</td>
+        <td class="actions">
+          <button class="small" data-action="copy" data-id="${esc(c.code)}">Copy</button>
+          ${!c.used_at && !c.revoked_at ? `<button class="small danger" data-action="revoke-code" data-id="${c.id}">Cancel</button>` : ""}
+        </td>
+      </tr>`;
+    });
+  return table(["Code", "Kind", "Period", "Note", "Created", "Status", ""], rows);
+}
+
+function table(head, rows) {
+  if (!rows.length) return '<div class="empty">Nothing here yet.</div>';
+  return `<table><thead><tr>${head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`;
+}
+
+function render() {
+  renderTiles();
+  for (const button of document.querySelectorAll("[data-tab]")) {
+    button.setAttribute("aria-selected", String(button.dataset.tab === tab));
+  }
+  $("table").innerHTML = tab === "devices" ? renderDevices() : tab === "licenses" ? renderLicenses() : renderCodes();
+}
+
+/** A small form in a dialog; resolves to the field values, or null if cancelled. */
+function ask(title, text, fields, okLabel = "Save") {
+  $("dialog-title").textContent = title;
+  $("dialog-text").textContent = text;
+  $("dialog-ok").textContent = okLabel;
+  $("dialog-fields").innerHTML = fields.map((f) => `<label>${esc(f.label)}
+    <input name="${f.name}" type="${f.type || "number"}" value="${esc(f.value ?? "")}" ${f.type === "date" ? "" : `min="${f.min ?? 0}" max="${f.max ?? 3650}"`} ${f.required ? "required" : ""}>
+  </label>`).join("");
+  const dialog = $("dialog");
+  dialog.returnValue = "";
+  dialog.showModal();
+  return new Promise((resolve) => {
+    dialog.addEventListener("close", () => {
+      if (dialog.returnValue !== "ok") return resolve(null);
+      resolve(Object.fromEntries(fields.map((f) => [f.name, dialog.querySelector(`[name="${f.name}"]`).value])));
+    }, { once: true });
+  });
+}
+
+async function act(action, id) {
+  try {
+    if (action === "copy") {
+      await navigator.clipboard.writeText(id);
+      return showNotice("notice", `Copied ${id}.`, "done");
+    }
+    if (action === "extend-trial") {
+      const device = data.devices.find((d) => d.device_hash === id);
+      const values = await ask("Extend free trial", `${device.hotel_name || device.device_name || shortId(id)} — trial ends ${date(device.trial_ends_at)}. Days are added from that date, or from today if it has passed.`, [{ name: "days", label: "Days to add", value: 7, min: 1, required: true }]);
+      if (!values) return;
+      await call("extend-trial", { deviceHash: id, days: Number(values.days) });
+    } else if (action === "extend-license") {
+      const values = await ask("Extend licence", "Added from the current end date, or from today if it has ended.", [
+        { name: "years", label: "Years", value: 1, min: 0, max: 10 },
+        { name: "days", label: "Days", value: 0, min: 0 },
+      ]);
+      if (!values) return;
+      await call("extend-license", { licenseId: Number(id), years: Number(values.years || 0), days: Number(values.days || 0) });
+    } else if (action === "set-license-end") {
+      const license = data.licenses.find((l) => l.id === Number(id));
+      const values = await ask("Set end date", "The subscription ends at the end of this day (India time).", [
+        { name: "date", label: "End date", type: "date", value: license.expires_at.slice(0, 10), required: true },
+      ]);
+      if (!values) return;
+      await call("set-license-end", { licenseId: Number(id), date: values.date });
+    } else if (action === "revoke-license") {
+      if (!confirm("Cancel this licence? The computer using it locks at its next check.")) return;
+      await call("revoke-license", { licenseId: Number(id) });
+    } else if (action === "restore-license") {
+      await call("restore-license", { licenseId: Number(id) });
+    } else if (action === "revoke-code") {
+      if (!confirm("Cancel this unused code? It will stop working.")) return;
+      await call("revoke-code", { codeId: Number(id) });
+    }
+    await load();
+    showNotice("notice", "Saved.", "done");
+  } catch (error) {
+    showNotice("notice", error.message);
+  }
+}
+
+$("connect-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  connection.url = $("url").value.trim();
+  connection.password = $("password").value;
+  rememberUrl(connection.url);
+  showNotice("connect-notice", "");
+  try {
+    await load();
+  } catch (error) {
+    showNotice("connect-notice", error.message === "Failed to fetch"
+      ? "Couldn't reach the licence admin service. Check the function URL, and that license-admin is deployed."
+      : error.message);
+  }
+});
+
+$("generate-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  try {
+    const kind = $("kind").value;
+    const years = Number($("years").value);
+    const { code } = await call("generate-code", { kind, years, note: $("note").value.trim() });
+    const how = kind === "purchase"
+      ? "The owner enters it on the lock screen, or in Admin → Licence → Enter licence code."
+      : "The owner enters it in Admin → Licence → Enter licence code (or on the lock screen once it has ended).";
+    $("code-result").innerHTML = `<div class="muted">${kind === "purchase" ? "Purchase" : "Renewal"} code · ${years} year${years === 1 ? "" : "s"}</div>
+      <div class="mono">${esc(code.code)}</div>
+      <div class="muted" style="margin:6px 0 10px">${esc(how)}</div>
+      <button type="button" class="small" data-action="copy" data-id="${esc(code.code)}">Copy code</button>`;
+    $("code-result").classList.remove("hidden");
+    $("note").value = "";
+    await load();
+  } catch (error) {
+    showNotice("notice", error.message);
+  }
+});
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-action]");
+  if (button) void act(button.dataset.action, button.dataset.id);
+  const tabButton = event.target.closest("button[data-tab]");
+  if (tabButton) { tab = tabButton.dataset.tab; render(); }
+});
+
+$("search").addEventListener("input", render);
+$("refresh").addEventListener("click", () => load().catch((error) => showNotice("notice", error.message)));
+
+$("url").value = rememberedUrl() || $("url").value;
+</script>
+</body>
+</html>
