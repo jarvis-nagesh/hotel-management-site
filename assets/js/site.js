@@ -1,6 +1,17 @@
-/* swary.in — mobile menu, latest installer link, footer year. */
+/* swary.in — old-link redirect, mobile menu, latest installer link, footer year. */
 (function () {
   "use strict";
+
+  // The hotel app's sections used to live on the home page. Send links
+  // like swary.in/#pricing to the same section on the app's own page.
+  var MOVED = ["#features", "#screens", "#download", "#pricing", "#faq"];
+  if (
+    (location.pathname === "/" || location.pathname === "/index.html") &&
+    MOVED.indexOf(location.hash) !== -1
+  ) {
+    location.replace("/products/hotel-management/" + location.hash);
+    return;
+  }
 
   // Mobile menu.
   var toggle = document.querySelector(".nav-toggle");
