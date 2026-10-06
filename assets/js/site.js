@@ -46,7 +46,9 @@
   var links = document.querySelectorAll("[data-download]");
   if (!links.length || !window.fetch) return;
 
+  // Remember the answer for an hour so repeat visits skip the GitHub request.
   var CACHE_KEY = "swary-latest-release";
+  var CACHE_MS = 60 * 60 * 1000;
   var apply = function (release) {
     if (!release || !release.url) return;
     links.forEach(function (link) {
@@ -58,8 +60,8 @@
   };
 
   try {
-    var cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "null");
-    if (cached) return apply(cached);
+    var cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+    if (cached && Date.now() - cached.savedAt < CACHE_MS) return apply(cached);
   } catch (error) {
     /* storage unavailable: just ask GitHub */
   }
@@ -80,9 +82,10 @@
         url: installer.browser_download_url,
         version: String(data.tag_name || "").replace(/^v/, ""),
         size: installer.size ? Math.round(installer.size / 1048576) + " MB" : "",
+        savedAt: Date.now(),
       };
       try {
-        sessionStorage.setItem(CACHE_KEY, JSON.stringify(release));
+        localStorage.setItem(CACHE_KEY, JSON.stringify(release));
       } catch (error) {
         /* not cached */
       }
