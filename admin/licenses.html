@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <!--
-  Swary Soft licence admin, hosted at https://swary.in/admin/licenses.html
+  Swary Technology licence admin, hosted at https://swary.in/admin/licenses.html
   from the hotel-management-site repository (copy this file there after
   changing it). It also works opened straight from disk.
 
@@ -1074,8 +1074,8 @@ function codeMessage(code, device) {
   const hello = device?.owner_name ? `Hello ${device.owner_name},` : "Hello,";
   const period = plural(code.years, "year");
   return code.kind === "purchase"
-    ? `${hello}\n\nThank you for choosing Swary Hotel Management.\n\nYour licence code: ${code.code}\nValid for ${period} from activation.\n\nTo activate it, enter the code on the app's lock screen, or open Admin → Licence → Enter licence code.\n\nSwary Soft · ${SUPPORT}`
-    : `${hello}\n\nThank you for renewing Swary Hotel Management.\n\nYour renewal code: ${code.code}\nIt adds ${period} to your subscription.\n\nIn the app, open Admin → Licence → Enter licence code (or enter it on the lock screen).\n\nSwary Soft · ${SUPPORT}`;
+    ? `${hello}\n\nThank you for choosing Swary Hotel Management.\n\nYour licence code: ${code.code}\nValid for ${period} from activation.\n\nTo activate it, enter the code on the app's lock screen, or open Admin → Licence → Enter licence code.\n\nSwary Technology · ${SUPPORT}`
+    : `${hello}\n\nThank you for renewing Swary Hotel Management.\n\nYour renewal code: ${code.code}\nIt adds ${period} to your subscription.\n\nIn the app, open Admin → Licence → Enter licence code (or enter it on the lock screen).\n\nSwary Technology · ${SUPPORT}`;
 }
 
 function newCode({ kind = "purchase", device: presetDevice = "" } = {}) {
